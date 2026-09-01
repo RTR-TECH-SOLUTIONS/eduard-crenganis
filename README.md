@@ -45,9 +45,10 @@ Style Script (eyebrow-urile de deasupra titlurilor).
 
 ## Structură
 
-- `/` — hero, despre (portretul clientului, pe hârtie), cele 3 direcții ca
-  carduri foto, minutar, divizia de furnizori, teaser de portofoliu, proces în 5 etape,
-  potrivire, FAQ, contact.
+- `/` — hero compus în stil landing (lockup de nume cu alamă lucioasă, portretul clientului
+  în cerc cu inel și arc de alamă, citat, card de hârtie care intră în secțiunea de dedesubt),
+  despre, cele 3 direcții ca carduri foto, minutar, divizia de furnizori, teaser de portofoliu,
+  proces în 5 etape, potrivire, FAQ, contact.
 - `/servicii` — cele trei direcții în detaliu (durată, onorariu, livrabile), tabel de
   comparație „ce intră în fiecare”, FAQ despre servicii.
 - `/event-management` — pagina de serviciu cu documentația densă: formate, ce include pe

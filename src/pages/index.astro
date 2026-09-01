@@ -116,9 +116,9 @@ const faq = [
   title="Eduard Crenganiș · organizator de evenimente B2B în Bacău"
   description="Consultanță, planning și event management pentru conferințe, summit-uri și evenimente corporate. Din Bacău, în toată țara. Contractarea și coordonarea furnizorilor incluse."
 >
-  <!-- ================= HERO ================= -->
-  <section class="hero">
-    <div class="hero__media">
+  <!-- ================= HERO / LANDING ================= -->
+  <section class="lp">
+    <div class="lp__media">
       <img
         src={u('/img/hero-sala.webp')}
         alt="Sală de conferință în semiîntuneric, participanți văzuți din spate, scenă luminată în depărtare"
@@ -129,28 +129,89 @@ const faq = [
       />
     </div>
 
-    <div class="hero__inner">
-      <p class="hero__script">organizator de evenimente</p>
-      <h1>
-        Evenimente B2B ținute strâns, <br class="br-lg" />
-        de la brief până la demontare.
-      </h1>
-      <p class="lede hero__lede">
-        Consultanță, planificare și management de eveniment pentru companii, asociații
-        profesionale și organizatori de conferințe. Din Bacău, în toată țara. Lucrez cu un
-        minutar, un buget spart pe capitole și o listă de furnizori pe care le vezi și tu.
-      </p>
-      <div class="hero__cta">
-        <a class="btn btn--solid" href="#contact">Cere o ofertă</a>
-        <a class="btn btn--ghost" href={u('/servicii')}>Vezi serviciile</a>
+    <div class="lp__body">
+      <div class="wrap lp__grid">
+        <div class="lp__lockup">
+          <p class="lp__script">organizator de evenimente</p>
+
+          <h1 class="lp__nume">
+            <span class="lp__nume-1">Eduard</span>
+            <span class="lp__nume-2">Crenganiș</span>
+          </h1>
+
+          <p class="lp__tag">Consultanță · Planner · <span class="brass">Event Management</span></p>
+          <hr class="lp__rule" />
+          <p class="lp__sub">Evenimente B2B care încep <strong>la ora din agendă</strong></p>
+
+          <ul class="cred">
+            <li>
+              <span class="cred__ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                  <rect x="3.5" y="5" width="17" height="15" rx="1.5" />
+                  <path d="M3.5 9.5h17M8 3.5v3M16 3.5v3" />
+                  <path d="M8 13.5h3.5M8 16.5h8" />
+                </svg>
+              </span>
+              <span class="cred__txt"><strong>140</strong> de evenimente coordonate</span>
+            </li>
+            <li>
+              <span class="cred__ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                  <circle cx="6" cy="17.5" r="2.4" /><circle cx="18" cy="17.5" r="2.4" /><circle cx="12" cy="5.5" r="2.4" />
+                  <path d="M10.7 7.7 7.3 15.3M13.3 7.7l3.4 7.6M8.4 17.5h7.2" />
+                </svg>
+              </span>
+              <span class="cred__txt"><strong>90</strong> de furnizori verificați</span>
+            </li>
+            <li>
+              <span class="cred__ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                  <circle cx="12" cy="12" r="8.5" />
+                  <path d="M12 6.8V12l3.4 2.1" />
+                </svg>
+              </span>
+              <span class="cred__txt"><strong>9</strong> ani în producție</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="lp__dreapta">
+          <blockquote class="lp__citat">
+            <span class="lp__ghilimea" aria-hidden="true">”</span>
+            <p>
+              Nu vând organizare de evenimente.<br />
+              Vând un eveniment care începe{' '}
+              <span class="brass">la ora scrisă în agendă.</span>
+            </p>
+          </blockquote>
+
+          <div class="portret portret--lg">
+            <div class="portret__inner">
+              <img
+                src={u('/img/eduard-portret.webp')}
+                alt="Eduard Crenganiș, organizator de evenimente B2B"
+                width="1100"
+                height="1100"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="hero__facts">
-      <span>9 ani în producție de evenimente</span>
-      <span>140 de evenimente coordonate</span>
-      <span>de la 60 la 1.200 de participanți</span>
-      <span>90 de furnizori verificați</span>
+    <div class="lp__foot">
+      <div class="wrap">
+        <div class="lp__card">
+          <p class="eyebrow">din Bacău, în toată țara</p>
+          <p class="lp__card-titlu">Conferințe, forumuri și gale B2B</p>
+          <p class="lp__card-text">
+            Îți spun în prima discuție pe ce direcție te încadrezi și dacă am agenda liberă.
+          </p>
+          <a class="btn btn--solid" href={u('/servicii')}>Vezi serviciile</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -158,18 +219,17 @@ const faq = [
   <section class="section section--paper" id="despre">
     <div class="wrap despre">
       <figure class="despre__foto">
-        <div class="portret">
-          <div class="portret__inner">
-            <img
-              src={u('/img/eduard-portret.webp')}
-              alt="Eduard Crenganiș, organizator de evenimente"
-              width="1100"
-              height="1100"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
+        <div class="shot shot--tall">
+          <img
+            src={u('/img/montaj.webp')}
+            alt="Echipă montând structura de scenă înaintea unui eveniment, în sală goală"
+            width="1600"
+            height="1067"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
+        <figcaption>Fig. 01 · montaj la 06:20, de aici am început</figcaption>
       </figure>
 
       <div class="despre__text">
@@ -492,63 +552,181 @@ const faq = [
 </script>
 
 <style>
-  .br-lg { display: none; }
-  @media (min-width: 900px) { .br-lg { display: inline; } }
-
-  /* ---------- Hero ---------- */
-  .hero {
+  /* ---------- Hero / landing compus ---------- */
+  .lp {
     position: relative;
-    min-height: min(92svh, 54rem);
-    display: grid;
-    align-content: end;
-    padding: clamp(6rem, 14vh, 10rem) var(--gutter) 0;
     isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    min-height: min(100svh, 58rem);
+    padding-top: calc(var(--bar-h) + clamp(1.25rem, 3.5vh, 2.5rem));
   }
 
-  .hero__media { position: absolute; inset: 0; z-index: -2; }
-  .hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+  .lp__media { position: absolute; inset: 0; z-index: -2; }
+  .lp__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
 
-  .hero::before {
+  .lp::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: -1;
     background:
-      linear-gradient(to top, var(--ink) 4%, rgba(11, 10, 9, 0.72) 46%, rgba(11, 10, 9, 0.45) 100%),
-      linear-gradient(to right, rgba(11, 10, 9, 0.8) 0%, rgba(11, 10, 9, 0.1) 62%);
+      linear-gradient(to right, rgba(11, 10, 9, 0.94) 0%, rgba(11, 10, 9, 0.74) 46%, rgba(11, 10, 9, 0.5) 100%),
+      linear-gradient(to bottom, rgba(11, 10, 9, 0.72) 0%, rgba(11, 10, 9, 0.3) 38%, rgba(11, 10, 9, 0.66) 100%);
   }
 
-  .hero__inner { max-width: 68rem; margin-inline: auto; width: 100%; }
-  .hero__script {
+  .lp__body { padding-inline: var(--gutter); flex: 1 1 auto; display: flex; align-items: center; }
+  .lp__grid { display: grid; gap: clamp(2.25rem, 5vw, 3.5rem); align-items: center; }
+  @media (min-width: 1040px) {
+    .lp__grid { grid-template-columns: 1.06fr 0.94fr; gap: clamp(2rem, 4vw, 3.5rem); }
+  }
+
+  /* lockup-ul de nume */
+  .lp__script {
     font-family: var(--font-script);
-    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    font-size: clamp(1.6rem, 3vw, 2.35rem);
     line-height: 1;
     color: var(--brass);
-    margin: 0 0 1.1rem;
+    margin: 0 0 0.5rem;
   }
-  .hero__lede { max-width: 38rem; margin-top: 1.9rem; }
-  .hero__cta { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 2.4rem; }
 
-  .hero__facts {
-    max-width: 68rem;
-    margin: clamp(3rem, 7vh, 5rem) auto 0;
-    width: 100%;
+  .lp__nume {
     display: grid;
-    gap: 0.55rem 2.5rem;
-    padding-block: 1.15rem;
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 0.94;
+    letter-spacing: -0.005em;
+    font-size: clamp(2.6rem, 7.6vw, 5.4rem);
+    text-wrap: nowrap;
+  }
+  .lp__nume-1 { color: var(--paper); }
+  .lp__nume-2 { color: var(--brass); }
+  @supports (-webkit-background-clip: text) or (background-clip: text) {
+    /* alamă lucioasă, ca literele aurii din referință */
+    .lp__nume-2 {
+      background-image: linear-gradient(172deg, #f2d8a2 0%, #d7a95f 26%, #a97c3a 52%, #ecd097 74%, #a97c3a 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  .lp__tag {
+    margin: 1.15rem 0 0;
+    font-size: clamp(0.82rem, 1.15vw, 0.95rem);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--paper);
+  }
+  .lp__rule {
+    border: 0;
     border-top: 1px solid var(--line);
-    font-family: var(--font-mono);
-    font-size: 0.74rem;
-    color: var(--paper-3);
-    letter-spacing: 0.01em;
+    margin: 0.9rem 0;
+    max-width: 30rem;
   }
-  @media (min-width: 760px) {
-    .hero__facts { grid-template-columns: repeat(4, auto); justify-content: space-between; }
+  .lp__sub {
+    margin: 0;
+    font-size: clamp(1rem, 1.35vw, 1.18rem);
+    color: var(--paper-2);
   }
+  .lp__sub strong { color: var(--brass); font-weight: 500; }
+
+  /* rândul de credențiale, cu cercuri de alamă */
+  .cred {
+    list-style: none;
+    margin: clamp(1.4rem, 3.2vh, 2.25rem) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 30rem;
+  }
+  .cred li { display: grid; justify-items: start; gap: 0.6rem; padding-right: 1rem; }
+  .cred li + li { padding-left: 1.25rem; border-left: 1px solid var(--line-soft); }
+  .cred__ico {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid color-mix(in srgb, var(--brass) 55%, transparent);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: var(--brass);
+  }
+  .cred__ico svg { width: 1.1rem; height: 1.1rem; stroke-linecap: round; stroke-linejoin: round; }
+  .cred__txt { font-size: 0.8rem; color: var(--paper-2); line-height: 1.35; }
+  .cred__txt strong { color: var(--paper); font-weight: 500; }
+
+  /* coloana din dreapta: citat + portret */
+  .lp__dreapta { display: grid; justify-items: center; gap: 1.5rem; }
+  @media (min-width: 1040px) { .lp__dreapta { justify-items: end; } }
+
+  .lp__citat { display: none; margin: 0; max-width: 19rem; text-align: right; }
+  .lp__ghilimea {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 3rem;
+    line-height: 0.55;
+    color: var(--brass);
+  }
+  .lp__citat p { margin: 0.55rem 0 0; font-size: 0.95rem; line-height: 1.5; color: var(--paper-2); }
+  @media (min-width: 1240px) { .lp__citat { display: block; } }
+
+  .portret--lg { width: min(92%, 23rem); border-color: transparent; }
+  /* vinietă în interiorul cercului, ca fundalul de studio să nu sară din scenă */
+  .portret--lg .portret__inner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle closest-side at 50% 40%, rgba(11, 10, 9, 0) 38%, rgba(11, 10, 9, 0.34) 78%, rgba(11, 10, 9, 0.72) 100%);
+  }
+  /* arcul de alamă din spatele portretului */
+  .portret--lg::before {
+    content: '';
+    position: absolute;
+    inset: -5%;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-bottom-color: var(--brass);
+    border-right-color: var(--brass);
+    opacity: 0.9;
+  }
+  @media (min-width: 1040px) { .portret--lg { width: min(100%, 25rem); } }
+
+  /* laptop scurt: compoziția se strânge ca să nu cadă cardul sub linia de plutire */
+  @media (min-width: 1040px) and (max-height: 820px) {
+    .lp__nume { font-size: clamp(2.6rem, 6vw, 4.6rem); }
+    .lp__script { font-size: 1.85rem; }
+    .portret--lg { width: min(100%, 21rem); }
+    .cred { margin-top: 1.2rem; }
+    .cred__ico { width: 2.2rem; height: 2.2rem; }
+  }
+
+  /* cardul de jos, care intră în secțiunea de hârtie de dedesubt */
+  .lp__foot { padding-inline: var(--gutter); }
+  .lp__card {
+    background: var(--paper-bg);
+    color: var(--on-paper);
+    width: min(100%, 29rem);
+    padding: clamp(1.5rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.25rem) clamp(1.75rem, 3vw, 2.25rem);
+    margin-top: clamp(1.5rem, 3.5vh, 2.5rem);
+  }
+  .lp__card .eyebrow { color: var(--brass-dim); font-size: clamp(1.35rem, 2vw, 1.7rem); }
+  .lp__card-titlu {
+    margin: 0.35rem 0 0.6rem;
+    font-size: clamp(1.02rem, 1.5vw, 1.2rem);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--on-paper);
+  }
+  .lp__card-text { margin: 0 0 1.4rem; font-size: 0.92rem; color: var(--on-paper-2); }
+  .lp__card .btn--solid { background: var(--on-paper); color: var(--paper); }
+  .lp__card .btn--solid:hover { background: var(--brass-dim); }
 
   /* ---------- Despre ---------- */
   .despre { display: grid; gap: 2.5rem; align-items: center; }
-  .despre__foto { margin: 0; display: flex; justify-content: center; }
+  .despre__foto { margin: 0; }
   .despre__text h2 {
     font-size: clamp(1.75rem, 3vw, 2.6rem);
     margin: 0.2rem 0 1.4rem;

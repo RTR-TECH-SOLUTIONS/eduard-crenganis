@@ -1,0 +1,501 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+
+const formate = [
+  ['Conferințe și forumuri de industrie', '80–600 participanți, o zi sau două, cu agendă pe secțiuni și pauze de networking construite intenționat.'],
+  ['Summit-uri și expo-conferințe', 'Conținut pe scenă plus zonă de expunere pentru parteneri. Aici se decid pachetele de sponsorizare și fluxul prin standuri.'],
+  ['Lansări de produs pentru parteneri și distribuitori', 'Format scurt, foarte tehnic, cu demonstrație și materiale de plecare. Se joacă totul în două ore.'],
+  ['Gale, aniversări și dineuri corporate', 'Protocol, plan de mese, scenariu de premiere. Partea în care greșelile se văd cel mai tare.'],
+  ['Traininguri, offsite-uri și adunări generale', 'Multe zile, cazare, transport, săli paralele. Logistica bate spectacolul.'],
+  ['Roadshow-uri și evenimente în mai multe orașe', 'Același format repetat în 3–6 orașe, cu furnizori locali coordonați de la distanță.'],
+];
+
+const capitole = [
+  {
+    nr: '01',
+    titlu: 'Înainte de contractare',
+    linii: [
+      'Ședință de brief și scrierea obiectivului în două propoziții pe care le semnăm amândoi',
+      'Propunere de format, durată și dată, cu argumentul din spate',
+      'Buget estimativ pe capitole, cu marja de risc trecută separat',
+      'Trei variante de locație vizionate, comparate pe capacitate, acustică, acces marfă și parcare',
+    ],
+  },
+  {
+    nr: '02',
+    titlu: 'Producție',
+    linii: [
+      'Cronologie pe săptămâni, cu termen și responsabil pe fiecare linie',
+      'Cereri de ofertă către furnizori și comparația lor, trimisă ție în formă brută',
+      'Negocierea prețurilor și a condițiilor de plată',
+      'Coordonarea designului: identitatea evenimentului, signalistică, materiale de print',
+      'Agenda pe minute și briefurile scrise pentru speakeri și moderator',
+      'Plan de sală, flux de participanți, poziții pentru înregistrare, garderobă, catering',
+      'Plan de risc: ce facem dacă plouă, dacă pică curentul, dacă un speaker anulează',
+    ],
+  },
+  {
+    nr: '03',
+    titlu: 'Montaj și ziua evenimentului',
+    linii: [
+      'Coordonarea montajului, cu ordinea de intrare a furnizorilor în sală',
+      'Repetiție tehnică cu o zi înainte, cu speakerii disponibili',
+      'Regie de la masa de control, pe stație, cu minutarul în mână',
+      'Un singur punct de contact pentru toți furnizorii în ziua Z: eu',
+      'Gestionarea situațiilor neprevăzute, fără să te sun pe tine pentru fiecare',
+    ],
+  },
+  {
+    nr: '04',
+    titlu: 'După',
+    linii: [
+      'Demontaj, inventar de echipamente, proces-verbal semnat cu locația',
+      'Decont final pe capitole, comparat cu bugetul aprobat',
+      'Raport scurt: ce a funcționat, ce nu, ce schimbăm la ediția următoare',
+      'Predarea contactelor și a contractelor cu furnizorii, ca să rămână la tine',
+    ],
+  },
+];
+
+const calendar = [
+  ['S-12', 'Brief, obiectiv, buget estimativ. Blocarea datei.'],
+  ['S-11', 'Vizionări de locații. Contract de spațiu semnat până la finalul săptămânii.'],
+  ['S-9', 'Cereri de ofertă pe toate capitolele. Concept și identitate vizuală aprobate.'],
+  ['S-7', 'Furnizori contractați pe sonorizare, lumini, catering. Agenda în versiune 1.'],
+  ['S-5', 'Deschiderea înscrierilor. Briefuri trimise speakerilor.'],
+  ['S-3', 'Plan de sală final. Comandă de print. Agenda blocată.'],
+  ['S-1', 'Minutar trimis tuturor. Confirmare telefonică cu fiecare furnizor.'],
+  ['Z-1', 'Montaj și repetiție tehnică.'],
+  ['Z', 'Evenimentul.'],
+  ['Z+3', 'Decont final și raport.'],
+];
+
+const faq = [
+  {
+    q: 'Ce înseamnă concret „contractarea furnizorilor”?',
+    a: 'Eu identific furnizorii potriviți pentru bugetul și formatul tău, cer oferte de la minimum trei pe fiecare capitol important, le compar linie cu linie și ți le trimit. Tu alegi și semnezi. Apoi eu țin legătura cu ei: termene, livrări, ora de intrare la montaj, modificări. Nu iau comision de la furnizori și nu marchez prețurile lor.',
+  },
+  {
+    q: 'De ce nu semnezi tu contractele, în numele meu?',
+    a: 'Pentru că atunci prețul real dispare din vedere și rămâi legat de mine și la ediția următoare. Așa cum lucrez eu, după eveniment rămâi cu lista de furnizori, cu prețurile lor și cu relația deja construită.',
+  },
+  {
+    q: 'Am nevoie și de închirieri de mobilier sau echipamente separat?',
+    a: 'Nu separat. Închirierile intră în pachetul de Event Management: mobilier, scenotehnică, corturi, generatoare, pardoseli. Le contractez de la furnizorii din rețea, la fel ca restul capitolelor.',
+  },
+  {
+    q: 'Lucrezi cu echipa mea de marketing?',
+    a: 'Da, și e cel mai bun scenariu. Ei fac comunicarea, invitațiile și conținutul; eu fac producția și logistica. Le dau tot ce le trebuie: date, termene, specificații de print, plan de sală.',
+  },
+  {
+    q: 'Cât costă pachetul complet?',
+    a: 'Onorariu fix între 9.000 și 28.000 de lei, în funcție de mărime și durată, sau 8–12% din bugetul de producție la evenimentele peste 150.000 de lei. Onorariul e trecut separat de buget, într-o linie proprie.',
+  },
+];
+---
+
+<Base
+  title="Event Management B2B · organizare completă de eveniment | Eduard Crenganiș"
+  description="Pachetul complet de event management pentru conferințe, summit-uri și evenimente corporate: producție, contractarea și coordonarea furnizorilor, regie în ziua evenimentului, decont final."
+  current="event-management"
+>
+  <!-- ================= HERO ================= -->
+  <section class="phero">
+    <div class="phero__media">
+      <img
+        src={u('/img/montaj.webp')}
+        alt="Echipă montând structura de scenă înaintea unei conferințe, în sală goală"
+        width="1600"
+        height="1067"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+    <div class="phero__inner wrap">
+      <p class="mono" style="color:var(--brass); margin-bottom:1.4rem;">
+        Direcția 03 · pachetul complet
+      </p>
+      <h1>Event Management</h1>
+      <p class="lede" style="max-width:40rem; margin-top:1.6rem;">
+        Predai evenimentul în întregime și te ocupi de invitați. Eu construiesc, contractez,
+        coordonez și stau în sală de la primul om care intră până la ultimul cablu strâns.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= CE ÎNSEAMNĂ ================= -->
+  <section class="section">
+    <div class="wrap poz">
+      <div>
+        <h2>Diferența nu e în listă. E în cine răspunde la telefon la 07:15, în ziua evenimentului.</h2>
+      </div>
+      <div class="poz__text">
+        <p>
+          Multe agenții vând același conținut: concept, logistică, coordonare. Pe hârtie arată
+          identic. Diferența apare în ziua montajului, când sonorizarea întârzie două ore și
+          cineva trebuie să decidă dacă se mută repetiția sau se taie o probă.
+        </p>
+        <p>
+          Eu lucrez singur pe strategie și coordonare și strâng echipa de producție pentru
+          fiecare proiect. Nu am cinci evenimente în aceeași săptămână și nu-ți dau un coleg
+          junior în ziua Z. Asta limitează câte proiecte iau pe an, dar e singurul mod în care
+          garantez ce scrie mai jos.
+        </p>
+        <p>
+          Pachetul acoperă tot ce e în direcția de Planner, plus partea pe care majoritatea
+          clienților o subestimează: <strong>găsirea, negocierea și ținerea în frâu a
+          furnizorilor</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ================= FORMATE ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head">
+        <span class="head__num">Formate acoperite</span>
+        <h2>Ce fel de evenimente iau pe pachetul complet.</h2>
+      </div>
+
+      <dl class="formate">
+        {formate.map(([t, d]) => (
+          <div class="formate__row">
+            <dt>{t}</dt>
+            <dd>{d}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ================= CE INCLUDE ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head">
+        <span class="head__num">Ce include</span>
+        <h2>Patru capitole, în ordinea în care se întâmplă.</h2>
+      </div>
+
+      <div class="capitole">
+        {capitole.map((c) => (
+          <section class="capitol">
+            <div class="capitol__head">
+              <span class="head__num">{c.nr}</span>
+              <h3>{c.titlu}</h3>
+            </div>
+            <ul class="list">
+              {c.linii.map((l) => <li>{l}</li>)}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FURNIZORI (bandă cu foto) ================= -->
+  <section class="banda">
+    <div class="banda__media">
+      <img src={u('/img/montaj-sala.webp')} alt="Sală de bal pregătită dimineața pentru o conferință, scaune parțial aranjate" loading="lazy" decoding="async" width="1600" height="1067" />
+    </div>
+    <div class="banda__inner wrap">
+      <div class="head">
+        <span class="head__num">Închirieri și subcontractări</span>
+        <h2>Furnizorii sunt partea în care se pierd banii și nervii.</h2>
+      </div>
+
+      <div class="doua">
+        <div>
+          <p>
+            Un eveniment mediu înseamnă 10–16 furnizori care trebuie să intre în aceeași sală,
+            în ordinea potrivită, în patru ore. Dacă mobilierul vine înainte ca podeaua să fie
+            gata, ai pierdut o oră. Dacă cateringul intră prin holul cu participanți, ai
+            pierdut impresia.
+          </p>
+          <p>
+            Rețeaua mea acoperă opt capitole, cu 90 de furnizori pe care i-am văzut lucrând.
+            Nu e o listă din Google. Pentru fiecare știu cum se poartă când ceva merge prost,
+            ceea ce e singurul criteriu care contează la 06:30.
+          </p>
+        </div>
+        <div>
+          <ul class="list">
+            <li>Cer minimum trei oferte pe fiecare capitol important și ți le trimit brut</li>
+            <li>Negociez prețul și condițiile de plată, dar contractul e între tine și ei</li>
+            <li>Nu iau comision de la furnizori și nu adaug adaos pe ofertele lor</li>
+            <li>Pe sonorizare, lumini și catering am al doilea nume confirmat de rezervă</li>
+            <li>La final rămâi cu lista, cu prețurile și cu relația</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CALENDAR ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head">
+        <span class="head__num">Calendar tipic</span>
+        <h2>Douăsprezece săptămâni, pentru o conferință de 300 de oameni.</h2>
+        <p>
+          Se poate și în opt, dacă locația e deja rezervată. Sub șase săptămâni nu iau
+          proiecte pe pachetul complet, pentru că nu mai am timp să cer trei oferte pe capitol
+          și ajung să accept primul preț.
+        </p>
+      </div>
+
+      <ol class="rundown rundown--cal">
+        {calendar.map(([s, ce]) => (
+          <li>
+            <span class="rundown__ora">{s}</span>
+            <span class="rundown__ce">{ce}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ================= NU INCLUDE + CINE ================= -->
+  <section class="section">
+    <div class="wrap cine">
+      <figure>
+        <div class="shot shot--tall">
+          <img src={u('/img/portret.webp')} alt="Organizator de evenimente cu cască și clipboard, lângă scenă, privind spre sală" loading="lazy" decoding="async" width="1200" height="1600" />
+        </div>
+        <figcaption>Fig. 07 · în lateralul scenei, la minutul 3 din cuvântul de deschidere</figcaption>
+      </figure>
+
+      <div>
+        <h2 style="margin-bottom:1.5rem;">Ce nu intră în pachet.</h2>
+        <ul class="list list--no">
+          <li>Producția de conținut: prezentări, texte, filmări de promovare. Recomand oameni, dar nu le fac eu.</li>
+          <li>Campania de promovare și vânzarea biletelor. Pot lucra cu echipa sau agenția ta.</li>
+          <li>Aducerea speakerilor internaționali cu onorariu. Pot intermedia, se facturează separat.</li>
+          <li>Evenimente private de familie: nunți, botezuri, aniversări personale.</li>
+        </ul>
+
+        <p class="nota" style="margin-top:2rem;">
+          Un singur eveniment mare pe lună, maximum. Dacă data ta e ocupată, îți spun în
+          primele 24 de ore și îți recomand pe cineva, nu te țin în așteptare.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ================= FAQ ================= -->
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      <div class="head">
+        <span class="head__num">Întrebări despre pachet</span>
+        <h2>Ce se întreabă înainte de a semna.</h2>
+      </div>
+
+      <div class="faq">
+        {faq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <div class="faq__a"><p>{f.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="cta">
+    <div class="cta__media">
+      <img src={u('/img/gala.webp')} alt="Dineu corporate într-o sală întunecată, mese lungi cu lumini calde" loading="lazy" decoding="async" width="1600" height="900" />
+    </div>
+    <div class="cta__inner wrap">
+      <h2>Spune-mi data și numărul de invitați.</h2>
+      <p class="lede" style="max-width:36rem; margin-top:1.2rem;">
+        În 24 de ore îți spun dacă sunt liber, ce format ți-aș propune și în ce interval de
+        buget ne încadrăm. Fără prezentare de 40 de slide-uri.
+      </p>
+      <div class="hero__cta" style="margin-top:2.2rem;">
+        <a class="btn btn--solid" href={u('/#contact')}>Cere o ofertă</a>
+        <a class="btn btn--ghost" href="tel:+40741208336">+40 741 208 336</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---------- Hero de pagină ---------- */
+  .phero {
+    position: relative;
+    isolation: isolate;
+    padding: clamp(5rem, 12vh, 9rem) var(--gutter) clamp(4rem, 9vh, 7rem);
+    display: grid;
+    align-content: end;
+    min-height: min(64svh, 38rem);
+  }
+  .phero__media { position: absolute; inset: 0; z-index: -2; }
+  .phero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 55%; }
+  .phero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to top, var(--ink) 3%, rgba(11, 10, 9, 0.78) 52%, rgba(11, 10, 9, 0.55) 100%),
+      linear-gradient(to right, rgba(11, 10, 9, 0.75), rgba(11, 10, 9, 0.1) 70%);
+  }
+  .phero h1 { font-size: clamp(2.4rem, 5.2vw, 4.2rem); }
+
+  /* ---------- Text pe două coloane ---------- */
+  .poz { display: grid; gap: 2rem; }
+  .poz h2 { font-size: clamp(1.6rem, 2.6vw, 2.3rem); }
+  .poz__text { color: var(--paper-2); }
+  .poz__text strong { color: var(--paper); font-weight: 500; }
+  @media (min-width: 900px) {
+    .poz { grid-template-columns: 1fr 1fr; gap: clamp(3rem, 6vw, 6rem); }
+  }
+
+  /* ---------- Formate ---------- */
+  .formate { margin: 0; border-top: 1px solid var(--line); }
+  .formate__row {
+    display: grid;
+    gap: 0.4rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .formate dt { font-family: var(--font-display); font-size: 1.2rem; }
+  .formate dd { margin: 0; color: var(--paper-2); font-size: 0.94rem; max-width: 42rem; }
+  @media (min-width: 860px) {
+    .formate__row { grid-template-columns: 0.85fr 1.15fr; gap: 2.5rem; align-items: baseline; }
+  }
+
+  /* ---------- Capitole ---------- */
+  .capitole { display: grid; gap: 3rem; }
+  .capitol { padding-top: 1.5rem; border-top: 1px solid var(--line); }
+  .capitol__head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem; }
+  .capitol h3 { font-size: 1.35rem; }
+  @media (min-width: 900px) {
+    .capitole { grid-template-columns: 1fr 1fr; gap: 3rem clamp(2.5rem, 5vw, 4.5rem); }
+  }
+
+  .list { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.6rem; }
+  .list li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 0.94rem;
+    color: var(--paper-2);
+    line-height: 1.55;
+  }
+  .list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 0.7rem;
+    height: 1px;
+    background: var(--brass);
+  }
+  .list--no li::before { background: var(--paper-3); }
+
+  /* ---------- Bandă cu fotografie ---------- */
+  .banda {
+    position: relative;
+    isolation: isolate;
+    padding: clamp(4rem, 9vw, 7rem) var(--gutter);
+  }
+  .banda__media { position: absolute; inset: 0; z-index: -2; }
+  .banda__media img { width: 100%; height: 100%; object-fit: cover; }
+  .banda::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to right, rgba(11, 10, 9, 0.95) 30%, rgba(11, 10, 9, 0.74) 100%);
+  }
+  .doua { display: grid; gap: 2rem; color: var(--paper-2); }
+  @media (min-width: 900px) {
+    .doua { grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 5vw, 4rem); }
+  }
+
+  /* ---------- Calendar (același limbaj ca minutarul) ---------- */
+  .rundown { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); max-width: 54rem; }
+  .rundown li {
+    display: grid;
+    grid-template-columns: 3.6rem 1fr;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: baseline;
+  }
+  .rundown__ora {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--brass);
+    font-variant-numeric: tabular-nums;
+  }
+  .rundown__ce { font-size: 0.94rem; color: var(--paper-2); line-height: 1.5; }
+  @media (min-width: 640px) {
+    .rundown li { grid-template-columns: 4.5rem 1fr; gap: 1.75rem; }
+  }
+
+  /* ---------- Cine ---------- */
+  .cine { display: grid; gap: 2.5rem; }
+  .shot--tall { aspect-ratio: 3 / 4; }
+  @media (min-width: 900px) {
+    .cine { grid-template-columns: 0.75fr 1.25fr; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: start; }
+  }
+  .nota {
+    font-size: 0.92rem;
+    color: var(--paper-2);
+    border-left: 1px solid var(--brass);
+    padding-left: 1.1rem;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    position: relative;
+    isolation: isolate;
+    padding: clamp(4.5rem, 10vw, 8rem) var(--gutter);
+  }
+  .cta__media { position: absolute; inset: 0; z-index: -2; }
+  .cta__media img { width: 100%; height: 100%; object-fit: cover; }
+  .cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to right, rgba(11, 10, 9, 0.93) 24%, rgba(11, 10, 9, 0.6) 100%);
+  }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: 0.85rem; }
+
+  /* ---------- FAQ ---------- */
+  .faq { border-top: 1px solid var(--line); }
+  .faq details { border-bottom: 1px solid var(--line-soft); }
+  .faq summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 1.35rem 2.5rem 1.35rem 0;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    position: relative;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: '+';
+    position: absolute;
+    right: 0.25rem;
+    top: 1.25rem;
+    font-family: var(--font-mono);
+    color: var(--brass);
+    font-size: 1.1rem;
+  }
+  .faq details[open] summary::after { content: '–'; }
+  .faq__a { padding: 0 0 1.5rem; max-width: 42rem; }
+  .faq__a p { color: var(--paper-2); font-size: 0.95rem; margin: 0; }
+</style>

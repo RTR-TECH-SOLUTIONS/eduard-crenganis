@@ -1,0 +1,755 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+
+const directii = [
+  {
+    nr: '01',
+    titlu: 'Consultanță',
+    subtitlu: 'Ai echipă, dar nu ai un plan care stă în picioare.',
+    img: u('/img/consultanta.webp'),
+    alt: 'Ședință de planificare cu planuri de sală și buget tipărite pe masă',
+    cap: 'Fig. 01 · ședință de brief, plan de sală tipărit',
+    text: 'Intru pentru 3-5 săptămâni, mă uit la ce ai, îți spun ce nu funcționează și îți las un plan pe care poate să-l execute echipa ta. Fără să-ți vând producția după.',
+    livrabile: [
+      'Audit de concept: ce vrei să obții și dacă formatul ales duce acolo',
+      'Buget realist pe capitole, cu marja de risc separată',
+      'Recomandare de locație și dată, cu 3 variante comparate',
+      'Structura agendei și logica pauzelor',
+      'Plan de risc pentru ziua Z, scris, nu discutat',
+    ],
+  },
+  {
+    nr: '02',
+    titlu: 'Planner',
+    subtitlu: 'Ai planul, dar nu ai cine să-l ducă la capăt.',
+    img: u('/img/planner.webp'),
+    alt: 'Birou de organizator noaptea, cu minutar tipărit, plan de sală și bandă adezivă',
+    cap: 'Fig. 02 · birou de producție, săptămâna 8',
+    text: 'Construiesc tot dosarul evenimentului și îl țin la zi până în ziua dinaintea montajului. Tu aprobi, eu scriu și urmăresc.',
+    livrabile: [
+      'Concept și scenariu, cu ce se aude și ce se vede în fiecare moment',
+      'Vizionare de locații și negocierea contractului de spațiu',
+      'Agenda pe minute, nu pe ore',
+      'Plan de sală și fluxul participanților, de la parcare la garderobă',
+      'Brief scris pentru speakeri și moderator',
+      'Cronologia de producție pe săptămâni, cu termene pe fiecare furnizor',
+    ],
+  },
+  {
+    nr: '03',
+    titlu: 'Event Management',
+    subtitlu: 'Vrei să predai tot și să te ocupi de invitați.',
+    img: u('/img/management.webp'),
+    alt: 'Regizor de eveniment la masa de regie, cu consola de lumini aprinsă',
+    cap: 'Fig. 03 · masa de regie, cu 40 de minute înainte de deschidere',
+    text: 'Pachetul complet. Include divizia de închirieri și subcontractări: eu găsesc, negociez și coordonez furnizorii, tu semnezi contractele.',
+    livrabile: [
+      'Tot ce intră în Planner',
+      'Contractarea furnizorilor: sonorizare, lumini, mobilier, catering, print, foto-video',
+      'Negocierea prețurilor și verificarea ofertelor linie cu linie',
+      'Coordonarea montajului și a repetiției tehnice',
+      'Regie în ziua evenimentului, cu minutar și stație',
+      'Demontaj, inventar și decont final pe capitole de buget',
+    ],
+  },
+];
+
+const minutar = [
+  ['07:30', 'Acces echipă în sală. Verific curentul pe scenă, internetul pe cablu și cine are cheile de la ușa de serviciu.'],
+  ['08:10', 'Test sonor și proiecție. Două microfoane de rezervă rămân pe masa de regie, încărcate.'],
+  ['08:40', 'Deschidere înregistrare. Două posturi pentru participanți, unul separat pentru presă și speakeri.'],
+  ['09:15', 'Cuvânt de deschidere, 4 minute. Cronometrat de la regie, nu de la scenă.'],
+  ['09:20', 'Panel 1, 45 de minute. Apa se schimbă la pauza tehnică de la minutul 25.'],
+  ['10:05', 'Coffee break, 25 de minute. Cateringul intră pe ușa de serviciu, nu prin holul cu participanți.'],
+  ['13:00', 'Prânz. Sala se resetează în paralel: scaune, sonorizare pentru sesiunea de după-amiază.'],
+  ['16:30', 'Sesiune de networking. Lumina scade cu două trepte, muzica intră la -18 dB.'],
+  ['17:40', 'Demontaj. Inventar de echipamente și proces-verbal semnat cu locația înainte să plece cineva.'],
+];
+
+const furnizori = [
+  ['Sonorizare, proiecție, traducere simultană', '11 furnizori'],
+  ['Lumini și scenotehnică', '8 furnizori'],
+  ['Mobilier, decor, aranjamente', '14 furnizori'],
+  ['Structuri, corturi, pardoseli, generatoare', '6 furnizori'],
+  ['Catering și bar', '19 furnizori'],
+  ['Print, signalistică, branding de spațiu', '9 furnizori'],
+  ['Foto, video, streaming', '12 furnizori'],
+  ['Transport, hostess, pază, garderobă', '11 furnizori'],
+];
+
+const proces = [
+  ['01', 'Brief și obiectiv', 'O ședință de 90 de minute. Ce vrei să se întâmple după eveniment, nu în timpul lui. Dacă nu putem răspunde la asta, nu trecem mai departe.'],
+  ['02', 'Concept și buget pe capitole', 'Primești un document cu formatul propus și bugetul spart pe capitole. Vezi de la început unde se duc banii și ce se poate tăia fără să se vadă.'],
+  ['03', 'Contractare', 'Cer oferte de la minimum trei furnizori pe fiecare capitol important. Le primești așa cum vin, cu comparația alături.'],
+  ['04', 'Producție și repetiție tehnică', 'Cronologie pe săptămâni. Repetiția tehnică se face cu o zi înainte, cu speakerii care pot veni.'],
+  ['05', 'Ziua Z și decont', 'Sunt în sală de la primul om care intră până la ultimul cablu strâns. La final primești decontul pe capitole și inventarul semnat.'],
+];
+
+const faq = [
+  {
+    q: 'Cât costă?',
+    a: 'Consultanța pornește de la 4.800 lei pe proiect. Planner și Event Management se calculează ca onorariu fix, între 9.000 și 28.000 lei, sau 8-12% din bugetul de producție la evenimentele peste 150.000 lei. Onorariul e trecut separat de bugetul de producție, ca să vezi exact ce plătești furnizorilor și ce plătești mie.',
+  },
+  {
+    q: 'Cu cât timp înainte trebuie să te contactez?',
+    a: 'Zece-douăsprezece săptămâni pentru o conferință de peste 150 de participanți. Sub șase săptămâni accept doar dacă locația e deja rezervată și bugetul e aprobat.',
+  },
+  {
+    q: 'Pot să-mi păstrez furnizorii cu care lucrez deja?',
+    a: 'Da, și e de preferat. Îi integrez în cronologie și lucrez cu ei ca și cu ai mei. Rețeaua mea acoperă doar ce lipsește.',
+  },
+  {
+    q: 'Pe numele cui se semnează contractele cu furnizorii?',
+    a: 'Pe numele companiei tale. Eu negociez și coordonez, dar relația contractuală și facturile rămân directe. Așa vezi prețul real și rămâi cu furnizorii și după ce terminăm.',
+  },
+  {
+    q: 'Ce se întâmplă dacă pică un furnizor cu trei zile înainte?',
+    a: 'Pe capitolele critice (sonorizare, lumini, catering) am al doilea nume confirmat verbal încă de la contractare. S-a întâmplat de patru ori în nouă ani; de fiecare dată evenimentul a început la ora din agendă.',
+  },
+];
+---
+
+<Base
+  title="Eduard Crenganiș · organizator de evenimente B2B"
+  description="Consultanță, planning și event management pentru conferințe, summit-uri și evenimente corporate. Contractarea și coordonarea furnizorilor incluse."
+>
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero__media">
+      <img
+        src={u('/img/hero-sala.webp')}
+        alt="Sală de conferință în semiîntuneric, participanți văzuți din spate, scenă luminată în depărtare"
+        width="2400"
+        height="1029"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+
+    <div class="hero__inner">
+      <p class="mono hero__eyebrow">Event management B2B · București și în țară</p>
+      <h1>
+        Evenimente B2B ținute strâns, <br class="br-lg" />
+        de la brief până la demontare.
+      </h1>
+      <p class="lede hero__lede">
+        Consultanță, planificare și management de eveniment pentru companii, asociații
+        profesionale și organizatori de conferințe. Lucrez cu un minutar, un buget spart pe
+        capitole și o listă de furnizori pe care le vezi și tu, nu doar eu.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--solid" href="#contact">Cere o ofertă</a>
+        <a class="btn btn--ghost" href="#proces">Vezi cum lucrez</a>
+      </div>
+    </div>
+
+    <div class="hero__facts">
+      <span>9 ani în producție de evenimente</span>
+      <span>140 de evenimente coordonate</span>
+      <span>de la 60 la 1.200 de participanți</span>
+      <span>90 de furnizori verificați</span>
+    </div>
+  </section>
+
+  <!-- ================= POZIȚIONARE ================= -->
+  <section class="section">
+    <div class="wrap poz">
+      <div>
+        <h2>
+          Nu vând „organizare de evenimente”.
+          Vând un eveniment care începe la ora scrisă în agendă.
+        </h2>
+      </div>
+      <div class="poz__text">
+        <p>
+          Un eveniment B2B nu se măsoară în fotografii frumoase. Se măsoară în cine a venit,
+          cu cine a vorbit și ce s-a întâmplat în cele două săptămâni de după. Restul e decor.
+        </p>
+        <p>
+          Lucrez singur pe partea de strategie și coordonare, cu o echipă de producție pe care
+          o strâng pentru fiecare proiect. Asta înseamnă că vorbești cu omul care ia deciziile,
+          nu cu un account manager care le transmite mai departe.
+        </p>
+        <p>
+          Serviciile sunt împărțite în trei direcții. Poți intra pe oricare dintre ele și poți
+          urca de la una la alta pe parcurs.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ================= CELE 3 DIRECȚII ================= -->
+  <section class="section" id="directii">
+    <div class="wrap">
+      <div class="head">
+        <span class="head__num">Trei direcții</span>
+        <h2>Alegi cât predai și cât ții la tine.</h2>
+      </div>
+    </div>
+
+    <div class="wrap dir">
+      {directii.map((d) => (
+        <article class="dir__row">
+          <figure class="dir__media">
+            <div class="shot"><img src={d.img} alt={d.alt} loading="lazy" decoding="async" width="1600" height="1200" /></div>
+            <figcaption>{d.cap}</figcaption>
+          </figure>
+
+          <div class="dir__body">
+            <p class="head__num">{d.nr}</p>
+            <h3>{d.titlu}</h3>
+            <p class="dir__sub">{d.subtitlu}</p>
+            <p>{d.text}</p>
+            <ul class="list">
+              {d.livrabile.map((l) => <li>{l}</li>)}
+            </ul>
+            {d.nr === '03' && (
+              <p style="margin-top:1.4rem;">
+                <a class="ulink" href={u('/event-management')}>Detaliat, pe pagina de Event Management</a>
+              </p>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ================= MINUTAR ================= -->
+  <section class="section" id="minutar">
+    <div class="wrap">
+      <div class="head">
+        <span class="head__num">Documentul de lucru</span>
+        <h2>Așa arată o zi de eveniment scrisă înainte să înceapă.</h2>
+        <p>
+          Fragment din minutarul unui forum de industrie cu 320 de participanți. Îl primești
+          cu o săptămână înainte, îl are fiecare furnizor pe telefon, iar în ziua Z e singurul
+          document după care se lucrează.
+        </p>
+      </div>
+
+      <div class="minutar">
+        <ol class="rundown">
+          {minutar.map(([ora, ce]) => (
+            <li>
+              <span class="rundown__ora">{ora}</span>
+              <span class="rundown__ce">{ce}</span>
+            </li>
+          ))}
+        </ol>
+
+        <figure>
+          <div class="shot shot--tall">
+            <img src={u('/img/minutar.webp')} alt="Minutar tipărit, cu note scrise de mână pe margine și un rând marcat" loading="lazy" decoding="async" width="1600" height="1067" />
+          </div>
+          <figcaption>Fig. 04 · minutarul de la ora 06:50, cu notele de la repetiția tehnică</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ================= FURNIZORI ================= -->
+  <section class="section" id="furnizori">
+    <div class="wrap furn">
+      <div>
+        <div class="head">
+          <span class="head__num">Închirieri și subcontractări</span>
+          <h2>Divizia de furnizori intră în pachetul de Event Management.</h2>
+          <p>
+            Nu am depozit propriu și nu vând echipamente. Am o rețea de furnizori cu care
+            lucrez de ani buni, de la care cer oferte, cu care negociez și pe care îi
+            coordonez la montaj. Contractele se semnează pe numele tău.
+          </p>
+        </div>
+
+        <dl class="deviz">
+          {furnizori.map(([cat, nr]) => (
+            <div class="deviz__row">
+              <dt>{cat}</dt>
+              <dd>{nr}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <p class="nota">
+          Pe fiecare capitol important cer minimum trei oferte și ți le trimit așa cum vin,
+          cu comparația alături. Comisionul meu e trecut separat, nu ascuns în prețul
+          furnizorului.
+        </p>
+      </div>
+
+      <figure class="furn__media">
+        <div class="shot shot--tall">
+          <img src={u('/img/depozit.webp')} alt="Depozit de echipamente de eveniment noaptea, cu flight case-uri și structuri de aluminiu" loading="lazy" decoding="async" width="1600" height="1067" />
+        </div>
+        <figcaption>Fig. 05 · depozitul unui furnizor de scenotehnică, la preluare</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ================= PROCES ================= -->
+  <section class="section" id="proces">
+    <div class="wrap">
+      <div class="head">
+        <span class="head__num">Cum lucrăm</span>
+        <h2>Cinci etape, fiecare cu un document la capăt.</h2>
+      </div>
+
+      <ol class="etape">
+        {proces.map(([nr, titlu, text]) => (
+          <li>
+            <span class="etape__nr">{nr}</span>
+            <div>
+              <h3>{titlu}</h3>
+              <p>{text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= STUDIU DE CAZ ================= -->
+  <section class="caz">
+    <div class="caz__media">
+      <img src={u('/img/expo.webp')} alt="Hol de expoziție B2B cu standuri întunecate și vizitatori în mișcare" loading="lazy" decoding="async" width="1600" height="900" />
+    </div>
+    <div class="caz__inner wrap">
+      <p class="head__num">Un proiect</p>
+      <h2>Forum de industrie, Cluj-Napoca.<br />Unsprezece săptămâni de la brief la demontare.</h2>
+      <p class="lede" style="max-width:44rem;">
+        Asociație profesională, prima ediție. Nu aveau nici locație, nici agendă, doar o dată
+        și o listă de 400 de invitați. Am intrat pe Event Management complet.
+      </p>
+      <dl class="cifre">
+        <div><dt>320</dt><dd>participanți prezenți din 400 invitați</dd></div>
+        <div><dt>14</dt><dd>furnizori contractați și coordonați</dd></div>
+        <div><dt>4 h</dt><dd>montaj complet, cu repetiție tehnică</dd></div>
+        <div><dt>0</dt><dd>depășire față de bugetul aprobat</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ================= POTRIVIRE ================= -->
+  <section class="section">
+    <div class="wrap potrivire">
+      <div>
+        <h3>Lucrăm bine împreună dacă</h3>
+        <ul class="list">
+          <li>Faci una până la patru evenimente pe an și nu ai departament dedicat.</li>
+          <li>Ești asociație sau organizație profesională și organizezi pentru membri.</li>
+          <li>Ai deja o echipă de marketing care poate prelua comunicarea, dar nu producția.</li>
+          <li>Vrei să știi exact unde se duce fiecare linie din buget.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Nu sunt omul potrivit dacă</h3>
+        <ul class="list list--no">
+          <li>Cauți nunți, botezuri sau petreceri private. Nu fac evenimente de familie.</li>
+          <li>Bugetul de producție e sub 25.000 de lei. La suma asta nu pot ține standardul de mai sus și îți spun de la început.</li>
+          <li>Vrei „ceva frumos, vedem noi pe parcurs”. Fără obiectiv scris, nu pornesc.</li>
+          <li>Ai nevoie de cineva care semnează contractele în locul tău.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ================= FAQ ================= -->
+  <section class="section" id="intrebari">
+    <div class="wrap wrap--narrow">
+      <div class="head">
+        <span class="head__num">Întrebări</span>
+        <h2>Ce mă întreabă toți, înainte de prima ședință.</h2>
+      </div>
+
+      <div class="faq">
+        {faq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <div class="faq__a"><p>{f.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="contact" id="contact">
+    <div class="wrap contact__grid">
+      <div>
+        <div class="head">
+          <span class="head__num">Contact</span>
+          <h2>Spune-mi ce eveniment ai în cap.</h2>
+          <p>
+            Răspund în aceeași zi lucrătoare. Dacă e mai simplu, sună direct sau scrie pe
+            WhatsApp; formularul de aici deschide tot o conversație pe WhatsApp, cu datele
+            deja completate.
+          </p>
+        </div>
+
+        <div class="contact__direct">
+          <a class="ulink" href="tel:+40741208336">+40 741 208 336</a>
+          <a class="ulink" href="mailto:eduard@crenganis.ro">eduard@crenganis.ro</a>
+        </div>
+
+        <figure style="margin-top:2.5rem;">
+          <div class="shot shot--wide">
+            <img src={u('/img/networking.webp')} alt="Pauză de cafea la o conferință, grupuri de oameni în discuție" loading="lazy" decoding="async" width="1600" height="900" />
+          </div>
+          <figcaption>Fig. 06 · pauza de la 10:05, cea care decide dacă evenimentul a fost util</figcaption>
+        </figure>
+      </div>
+
+      <form class="form" id="brief-form" novalidate>
+        <div class="field">
+          <label for="nume">Nume</label>
+          <input id="nume" name="nume" type="text" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="companie">Companie sau organizație</label>
+          <input id="companie" name="companie" type="text" autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label for="tip">Tip de eveniment</label>
+          <select id="tip" name="tip">
+            <option>Conferință sau forum</option>
+            <option>Summit / expo-conferință</option>
+            <option>Lansare de produs pentru parteneri</option>
+            <option>Gală sau dineu corporate</option>
+            <option>Training, offsite, team building</option>
+            <option>Încă nu știu</option>
+          </select>
+        </div>
+        <div class="field field--split">
+          <div>
+            <label for="data">Data estimată</label>
+            <input id="data" name="data" type="text" placeholder="ex. mai 2027" />
+          </div>
+          <div>
+            <label for="participanti">Participanți</label>
+            <input id="participanti" name="participanti" type="text" placeholder="ex. 250" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="mesaj">Ce vrei să obții din eveniment</label>
+          <textarea id="mesaj" name="mesaj" rows="4"></textarea>
+        </div>
+
+        <button class="btn btn--solid" type="submit">Trimite pe WhatsApp</button>
+        <p class="mono" style="margin-top:1rem;">
+          Demo · formularul deschide WhatsApp cu mesajul precompletat
+        </p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.getElementById('brief-form') as HTMLFormElement | null;
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const linii = [
+      'Bună ziua, vă scriu de pe site.',
+      '',
+      `Nume: ${d.get('nume') || '-'}`,
+      `Companie: ${d.get('companie') || '-'}`,
+      `Tip eveniment: ${d.get('tip') || '-'}`,
+      `Data estimată: ${d.get('data') || '-'}`,
+      `Participanți: ${d.get('participanti') || '-'}`,
+      '',
+      `${d.get('mesaj') || ''}`,
+    ];
+    window.open(`https://wa.me/40741208336?text=${encodeURIComponent(linii.join('\n'))}`, '_blank', 'noopener');
+  });
+</script>
+
+<style>
+  .br-lg { display: none; }
+  @media (min-width: 900px) { .br-lg { display: inline; } }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: min(92svh, 54rem);
+    display: grid;
+    align-content: end;
+    padding: clamp(6rem, 14vh, 10rem) var(--gutter) 0;
+    isolation: isolate;
+  }
+
+  .hero__media { position: absolute; inset: 0; z-index: -2; }
+  .hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to top, var(--ink) 4%, rgba(11, 10, 9, 0.72) 46%, rgba(11, 10, 9, 0.45) 100%),
+      linear-gradient(to right, rgba(11, 10, 9, 0.8) 0%, rgba(11, 10, 9, 0.1) 62%);
+  }
+
+  .hero__inner { max-width: 68rem; margin-inline: auto; width: 100%; }
+  .hero__eyebrow { margin-bottom: 1.6rem; color: var(--brass); }
+  .hero__lede { max-width: 38rem; margin-top: 1.9rem; }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 2.4rem; }
+
+  .hero__facts {
+    max-width: 68rem;
+    margin: clamp(3rem, 7vh, 5rem) auto 0;
+    width: 100%;
+    display: grid;
+    gap: 0.55rem 2.5rem;
+    padding-block: 1.15rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--paper-3);
+    letter-spacing: 0.01em;
+  }
+  @media (min-width: 760px) {
+    .hero__facts { grid-template-columns: repeat(4, auto); justify-content: space-between; }
+  }
+
+  /* ---------- Poziționare ---------- */
+  .poz { display: grid; gap: 2rem; }
+  .poz h2 { font-size: clamp(1.7rem, 2.8vw, 2.5rem); }
+  .poz__text { color: var(--paper-2); }
+  @media (min-width: 900px) {
+    .poz { grid-template-columns: 1.05fr 0.95fr; gap: clamp(3rem, 6vw, 6rem); }
+  }
+
+  /* ---------- Direcții ---------- */
+  .dir { display: grid; gap: clamp(3.5rem, 7vw, 6rem); }
+
+  .dir__row { display: grid; gap: 1.75rem; }
+  .dir__row .shot { aspect-ratio: 4 / 3; }
+  .dir__sub {
+    font-family: var(--font-display);
+    font-size: 1.12rem;
+    color: var(--brass);
+    margin-top: 0.5rem;
+    margin-bottom: 1.1rem;
+  }
+  .dir__body h3 { margin-top: 0.35rem; }
+  .dir__body > p { color: var(--paper-2); }
+
+  @media (min-width: 900px) {
+    .dir__row { grid-template-columns: 0.85fr 1.15fr; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: start; }
+    /* rândul din mijloc oglindit — ritm asimetric, nu grilă de carduri */
+    .dir__row:nth-child(2) .dir__media { order: 2; }
+  }
+
+  .list { list-style: none; padding: 0; margin: 1.4rem 0 0; display: grid; gap: 0.6rem; }
+  .list li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 0.94rem;
+    color: var(--paper-2);
+    line-height: 1.55;
+  }
+  .list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 0.7rem;
+    height: 1px;
+    background: var(--brass);
+  }
+  .list--no li::before { background: var(--paper-3); }
+
+  /* ---------- Minutar ---------- */
+  .minutar { display: grid; gap: 2.5rem; }
+  @media (min-width: 980px) {
+    .minutar { grid-template-columns: 1.35fr 0.65fr; gap: clamp(2.5rem, 5vw, 4rem); align-items: start; }
+  }
+
+  .rundown { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .rundown li {
+    display: grid;
+    grid-template-columns: 3.6rem 1fr;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: baseline;
+  }
+  .rundown__ora {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--brass);
+    font-variant-numeric: tabular-nums;
+  }
+  .rundown__ce { font-size: 0.94rem; color: var(--paper-2); line-height: 1.5; }
+  @media (min-width: 640px) {
+    .rundown li { grid-template-columns: 4.5rem 1fr; gap: 1.75rem; }
+  }
+
+  .shot--tall { aspect-ratio: 3 / 4; }
+  .shot--wide { aspect-ratio: 16 / 9; }
+
+  /* ---------- Furnizori (limbaj de deviz) ---------- */
+  .furn { display: grid; gap: 3rem; }
+  @media (min-width: 980px) {
+    .furn { grid-template-columns: 1.25fr 0.75fr; gap: clamp(3rem, 6vw, 5rem); align-items: start; }
+  }
+  .furn__media { position: sticky; top: 2rem; }
+
+  .deviz { margin: 0; }
+  .deviz__row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .deviz__row:first-child { border-top: 1px solid var(--line); }
+  .deviz dt { font-size: 0.95rem; color: var(--paper); flex: 0 1 auto; order: 0; }
+  /* linia punctată de deviz, împinsă între denumire și cifră cu `order` */
+  .deviz__row::after {
+    content: '';
+    order: 1;
+    flex: 1 1 1.5rem;
+    height: 0;
+    border-bottom: 1px dotted var(--line);
+    transform: translateY(-0.3em);
+  }
+  .deviz dd {
+    order: 2;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--paper-3);
+    white-space: nowrap;
+  }
+
+  .nota {
+    margin-top: 1.75rem;
+    font-size: 0.92rem;
+    color: var(--paper-2);
+    border-left: 1px solid var(--brass);
+    padding-left: 1.1rem;
+  }
+
+  /* ---------- Etape ---------- */
+  .etape { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+  .etape li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.25rem;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .etape li:first-child { border-top: 1px solid var(--line); }
+  .etape__nr { font-family: var(--font-mono); font-size: 0.78rem; color: var(--brass); padding-top: 0.35rem; }
+  .etape h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+  .etape p { color: var(--paper-2); font-size: 0.95rem; margin: 0; max-width: 46rem; }
+  @media (min-width: 760px) {
+    .etape li { grid-template-columns: 5rem 1fr; gap: 2.5rem; padding: 2.15rem 0; }
+  }
+
+  /* ---------- Studiu de caz ---------- */
+  .caz { position: relative; isolation: isolate; padding: clamp(4.5rem, 10vw, 8rem) var(--gutter); }
+  .caz__media { position: absolute; inset: 0; z-index: -2; }
+  .caz__media img { width: 100%; height: 100%; object-fit: cover; }
+  .caz::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to right, rgba(11, 10, 9, 0.95) 26%, rgba(11, 10, 9, 0.72) 100%),
+      linear-gradient(to bottom, rgba(11, 10, 9, 0.5), rgba(11, 10, 9, 0.25));
+  }
+  .caz h2 { margin: 0.9rem 0 1.4rem; font-size: clamp(1.6rem, 2.9vw, 2.5rem); }
+
+  .cifre { display: grid; gap: 1.5rem 2.5rem; margin: 2.75rem 0 0; }
+  .cifre dt {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.4vw, 2.8rem);
+    color: var(--brass);
+    line-height: 1;
+  }
+  .cifre dd { margin: 0.55rem 0 0; font-size: 0.86rem; color: var(--paper-2); max-width: 13rem; line-height: 1.45; }
+  @media (min-width: 700px) { .cifre { grid-template-columns: repeat(4, 1fr); } }
+
+  /* ---------- Potrivire ---------- */
+  .potrivire { display: grid; gap: 3rem; }
+  .potrivire h3 { font-size: 1.35rem; }
+  @media (min-width: 860px) { .potrivire { grid-template-columns: 1fr 1fr; gap: clamp(3rem, 6vw, 5rem); } }
+
+  /* ---------- FAQ ---------- */
+  .faq { border-top: 1px solid var(--line); }
+  .faq details { border-bottom: 1px solid var(--line-soft); }
+  .faq summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 1.35rem 2.5rem 1.35rem 0;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    position: relative;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: '+';
+    position: absolute;
+    right: 0.25rem;
+    top: 1.25rem;
+    font-family: var(--font-mono);
+    color: var(--brass);
+    font-size: 1.1rem;
+  }
+  .faq details[open] summary::after { content: '–'; }
+  .faq__a { padding: 0 0 1.5rem; max-width: 42rem; }
+  .faq__a p { color: var(--paper-2); font-size: 0.95rem; margin: 0; }
+
+  /* ---------- Contact ---------- */
+  .contact {
+    background: var(--ink-2);
+    border-top: 1px solid var(--line-soft);
+    padding: clamp(4rem, 8vw, 7rem) var(--gutter);
+  }
+  .contact__grid { display: grid; gap: 3rem; }
+  @media (min-width: 940px) {
+    .contact__grid { grid-template-columns: 1fr 0.85fr; gap: clamp(3rem, 6vw, 5rem); align-items: start; }
+  }
+  .contact__direct { display: grid; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.92rem; }
+  .contact__direct a { width: fit-content; }
+
+  .form { display: grid; gap: 1.1rem; }
+  .field { display: grid; gap: 0.4rem; }
+  .field--split { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .field--split > div { display: grid; gap: 0.4rem; }
+  .form label { font-family: var(--font-mono); font-size: 0.72rem; color: var(--paper-3); }
+  .form input,
+  .form select,
+  .form textarea {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--paper);
+    background: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 0.75rem 0.85rem;
+    width: 100%;
+    transition: border-color 160ms var(--ease);
+  }
+  .form textarea { resize: vertical; }
+  .form input:focus,
+  .form select:focus,
+  .form textarea:focus { border-color: var(--brass); outline: none; }
+  .form button { justify-content: center; margin-top: 0.5rem; }
+</style>

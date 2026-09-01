@@ -1,0 +1,184 @@
+---
+import '../styles/global.css';
+import { u } from '../lib/url';
+
+interface Props {
+  title: string;
+  description: string;
+  current?: 'acasa' | 'event-management';
+}
+
+const { title, description, current = 'acasa' } = Astro.props;
+
+const nav = [
+  { href: u('/#directii'), label: 'Direcții' },
+  { href: u('/#minutar'), label: 'Minutar' },
+  { href: u('/#furnizori'), label: 'Furnizori' },
+  { href: u('/#proces'), label: 'Cum lucrăm' },
+  { href: u('/event-management'), label: 'Event Management', page: 'event-management' },
+  { href: u('/#contact'), label: 'Contact' },
+];
+
+const tel = '+40 741 208 336';
+const telHref = '+40741208336';
+const mail = 'eduard@crenganis.ro';
+---
+
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b0a09" />
+    <!-- demo de prezentare: nu vrem să ajungă în Google -->
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href={u('/favicon.svg')} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap"
+    />
+  </head>
+
+  <body>
+    <div class="shell">
+      <header class="topbar" data-topbar>
+        <div class="topbar__row">
+          <a class="mark" href={u('/')}>
+            <span class="mark__mono">EC<span>.</span></span>
+            <span class="mark__text">
+              <span class="mark__name">Eduard Crenganiș</span>
+              <span class="mark__role">event management B2B</span>
+            </span>
+          </a>
+
+          <nav class="topnav" id="nav-principal" data-open="false" aria-label="Navigare principală">
+            <div class="topnav__links">
+              {nav.map((item) => (
+                <a href={item.href} aria-current={item.page === current ? 'page' : undefined}>{item.label}</a>
+              ))}
+            </div>
+
+            <div class="topnav__meta">
+              <p class="mono" style="margin-bottom:.35rem;">Direct, fără formular</p>
+              <a href={`tel:${telHref}`}>{tel}</a>
+              <a href={`mailto:${mail}`}>{mail}</a>
+              <p class="mono" style="margin-top:.9rem; line-height:1.5;">București · lucrez și în țară</p>
+            </div>
+          </nav>
+
+          <a class="topbar__tel" href={`tel:${telHref}`}>{tel}</a>
+
+          <button class="burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="nav-principal">
+            Meniu
+          </button>
+        </div>
+      </header>
+
+      <main class="main">
+        <slot />
+
+        <footer class="foot">
+          <div class="wrap foot__grid">
+            <div>
+              <span class="mark__mono">EC<span>.</span></span>
+              <p class="mono" style="margin-top:.6rem;">
+                Eduard Crenganiș · organizator de evenimente B2B<br />
+                CUI 41xxxxxx · București, Sector 2
+              </p>
+            </div>
+            <div class="foot__col">
+              <a class="ulink" href={`tel:${telHref}`}>{tel}</a>
+              <a class="ulink" href={`mailto:${mail}`}>{mail}</a>
+              <a class="ulink" href={`https://wa.me/${telHref.replace('+', '')}`} rel="noopener">WhatsApp</a>
+            </div>
+            <div class="foot__col">
+              <a href={u('/#directii')}>Cele trei direcții</a>
+              <a href={u('/event-management')}>Event Management</a>
+              <a href={u('/#furnizori')}>Furnizori și subcontractări</a>
+              <a href={u('/#contact')}>Cere o ofertă</a>
+            </div>
+          </div>
+          <div class="wrap">
+            <p class="mono" style="margin-top:2.5rem;">© 2026 Eduard Crenganiș</p>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      const toggle = document.querySelector('[data-menu-toggle]');
+      const panel = document.getElementById('nav-principal');
+      const topbar = document.querySelector('[data-topbar]');
+
+      const setOpen = (open: boolean) => {
+        panel?.setAttribute('data-open', String(open));
+        toggle?.setAttribute('aria-expanded', String(open));
+        topbar?.classList.toggle('is-open', open);
+        if (toggle) toggle.textContent = open ? 'Închide' : 'Meniu';
+      };
+
+      // bara e transparentă peste fotografia din hero până începe scroll-ul
+      const setStuck = () => topbar?.classList.toggle('is-stuck', window.scrollY > 12);
+      setStuck();
+      window.addEventListener('scroll', setStuck, { passive: true });
+
+      toggle?.addEventListener('click', () => {
+        setOpen(panel?.getAttribute('data-open') !== 'true');
+      });
+
+      panel?.querySelectorAll('a').forEach((a) => {
+        a.addEventListener('click', () => setOpen(false));
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setOpen(false);
+      });
+
+      // Intrare discretă: doar capetele de secțiune și fotografiile, o singură dată.
+      if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+        // Doar ce e sub linia de plutire — altfel conținutul deja pictat ar clipi.
+        const targets = [...document.querySelectorAll('.head, figure, .rundown, .deviz, .cifre, .formate')].filter(
+          (el) => el.getBoundingClientRect().top > window.innerHeight * 0.85
+        );
+        targets.forEach((el) => el.setAttribute('data-reveal', ''));
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+        );
+
+        targets.forEach((el) => io.observe(el));
+      }
+    </script>
+
+    <style>
+      .foot {
+        border-top: 1px solid var(--line-soft);
+        padding: clamp(3rem, 6vw, 5rem) var(--gutter) 3rem;
+        background: var(--ink-2);
+      }
+      .foot__grid {
+        display: grid;
+        gap: 2.5rem;
+        grid-template-columns: 1fr;
+      }
+      .foot__col { display: grid; gap: 0.45rem; align-content: start; font-size: 0.92rem; }
+      .foot__col a { color: var(--paper-2); text-decoration: none; }
+      .foot__col a:hover { color: var(--paper); }
+      @media (min-width: 780px) {
+        .foot__grid { grid-template-columns: 1.4fr 1fr 1fr; gap: 3rem; }
+      }
+    </style>
+  </body>
+</html>

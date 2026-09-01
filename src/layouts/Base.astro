@@ -5,17 +5,16 @@ import { u } from '../lib/url';
 interface Props {
   title: string;
   description: string;
-  current?: 'acasa' | 'event-management';
+  current?: 'acasa' | 'servicii' | 'event-management' | 'portofoliu';
 }
 
 const { title, description, current = 'acasa' } = Astro.props;
 
 const nav = [
-  { href: u('/#directii'), label: 'Direcții' },
-  { href: u('/#minutar'), label: 'Minutar' },
-  { href: u('/#furnizori'), label: 'Furnizori' },
-  { href: u('/#proces'), label: 'Cum lucrăm' },
+  { href: u('/servicii'), label: 'Servicii', page: 'servicii' },
   { href: u('/event-management'), label: 'Event Management', page: 'event-management' },
+  { href: u('/portofoliu'), label: 'Portofoliu', page: 'portofoliu' },
+  { href: u('/#despre'), label: 'Despre' },
   { href: u('/#contact'), label: 'Contact' },
 ];
 
@@ -39,7 +38,7 @@ const mail = 'eduard@crenganis.ro';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&family=Style+Script&display=swap"
     />
   </head>
 
@@ -66,7 +65,7 @@ const mail = 'eduard@crenganis.ro';
               <p class="mono" style="margin-bottom:.35rem;">Direct, fără formular</p>
               <a href={`tel:${telHref}`}>{tel}</a>
               <a href={`mailto:${mail}`}>{mail}</a>
-              <p class="mono" style="margin-top:.9rem; line-height:1.5;">București · lucrez și în țară</p>
+              <p class="mono" style="margin-top:.9rem; line-height:1.5;">Bacău · lucrez în toată țara</p>
             </div>
           </nav>
 
@@ -87,7 +86,7 @@ const mail = 'eduard@crenganis.ro';
               <span class="mark__mono">EC<span>.</span></span>
               <p class="mono" style="margin-top:.6rem;">
                 Eduard Crenganiș · organizator de evenimente B2B<br />
-                CUI 41xxxxxx · București, Sector 2
+                CUI 41xxxxxx · Bacău
               </p>
             </div>
             <div class="foot__col">
@@ -96,8 +95,9 @@ const mail = 'eduard@crenganis.ro';
               <a class="ulink" href={`https://wa.me/${telHref.replace('+', '')}`} rel="noopener">WhatsApp</a>
             </div>
             <div class="foot__col">
-              <a href={u('/#directii')}>Cele trei direcții</a>
+              <a href={u('/servicii')}>Cele trei direcții</a>
               <a href={u('/event-management')}>Event Management</a>
+              <a href={u('/portofoliu')}>Portofoliu</a>
               <a href={u('/#furnizori')}>Furnizori și subcontractări</a>
               <a href={u('/#contact')}>Cere o ofertă</a>
             </div>
@@ -141,7 +141,7 @@ const mail = 'eduard@crenganis.ro';
       // Intrare discretă: doar capetele de secțiune și fotografiile, o singură dată.
       if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
         // Doar ce e sub linia de plutire — altfel conținutul deja pictat ar clipi.
-        const targets = [...document.querySelectorAll('.head, figure, .rundown, .deviz, .cifre, .formate')].filter(
+        const targets = [...document.querySelectorAll('.head, figure, .rundown, .deviz, .cifre, .formate, .cards, .portret')].filter(
           (el) => el.getBoundingClientRect().top > window.innerHeight * 0.85
         );
         targets.forEach((el) => el.setAttribute('data-reveal', ''));

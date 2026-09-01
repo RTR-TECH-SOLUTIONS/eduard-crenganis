@@ -1,0 +1,398 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+
+const proiecte = [
+  {
+    img: u('/img/expo.webp'),
+    alt: 'Hol de expoziție B2B cu standuri întunecate și vizitatori în mișcare',
+    script: 'forum de industrie',
+    titlu: 'Prima ediție, Iași',
+    meta: '320 de participanți · 2025',
+    href: '#caz-forum',
+  },
+  {
+    img: u('/img/gala.webp'),
+    alt: 'Sală de gală cu mese rotunde și lumină caldă, înainte de intrarea invitaților',
+    script: 'gală de premiere',
+    titlu: 'Ediția a patra, Bacău',
+    meta: '210 invitați · 2025',
+    href: '#caz-gala',
+  },
+  {
+    img: u('/img/networking.webp'),
+    alt: 'Pauză de cafea la o conferință, grupuri de oameni în discuție',
+    script: 'lansare pentru parteneri',
+    titlu: 'Rețea de distribuție, București',
+    meta: '140 de parteneri · 2024',
+  },
+  {
+    img: u('/img/montaj-sala.webp'),
+    alt: 'Sală de conferință pregătită, cu scaunele aliniate înainte de intrarea participanților',
+    script: 'conferință medicală',
+    titlu: 'Congres regional, Piatra Neamț',
+    meta: '260 de participanți · 2024',
+  },
+  {
+    img: u('/img/hero-sala.webp'),
+    alt: 'Sală de conferință în semiîntuneric, participanți văzuți din spate, scenă luminată',
+    script: 'summit corporate',
+    titlu: 'Reuniune anuală, Brașov',
+    meta: '480 de participanți · 2023',
+  },
+  {
+    img: u('/img/montaj.webp'),
+    alt: 'Echipă montând structura de scenă înaintea unei conferințe, în sală goală',
+    script: 'târg de furnizori',
+    titlu: 'Ediția a doua, Bacău',
+    meta: '38 de standuri · 2023',
+  },
+];
+
+const cifreGenerale = [
+  ['140', 'evenimente coordonate în nouă ani'],
+  ['9', 'ani de la primul montaj'],
+  ['90', 'furnizori verificați în rețea'],
+  ['4', 'furnizori căzuți, 0 evenimente întârziate'],
+];
+
+const forumEtape = [
+  ['S-11', 'Brief cu boardul asociației. Obiectiv: 300 de participanți prezenți, nu înscriși.'],
+  ['S-9', 'Locație confirmată după trei vizionări. A câștigat cea cu ușă de serviciu separată.'],
+  ['S-6', 'Agenda închisă. 4 paneluri, 2 pauze lungi, o sesiune de networking cu format condus.'],
+  ['S-3', 'Toți cei 14 furnizori contractați, cu al doilea nume confirmat verbal pe sonorizare și catering.'],
+  ['S-1', 'Repetiție tehnică cu 6 din 11 speakeri. Restul au primit înregistrarea briefului.'],
+  ['Z', 'Deschidere la 09:15, cu 4 minute peste ora din agendă. Ultimul cablu strâns la 19:40.'],
+];
+
+const gala = [
+  ['210', 'invitați confirmați din 240'],
+  ['6 h', 'program continuu, fără gol între momente'],
+  ['9', 'furnizori, dintre care 3 ai clientului'],
+  ['1', 'schimbare de format, cu 40 de minute înainte'],
+];
+
+const vorbe = [
+  {
+    text: 'Ne-am dus la el cu o dată și o listă de invitați. A venit înapoi cu un buget în care vedeam fiecare linie și cu întrebări la care nu ne gândiserăm. Prima ediție și n-am avut nicio surpriză de plătit după.',
+    cine: 'Director executiv, asociație profesională',
+    unde: 'forumul de industrie, Iași',
+  },
+  {
+    text: 'Cel mai mult a contat că a fost în sală de la șapte dimineața. Când s-a schimbat ordinea premiilor cu 40 de minute înainte, s-a rezolvat între el și regie, fără să afle nimeni din sală.',
+    cine: 'Manager de comunicare, companie de producție',
+    unde: 'gala de premiere, Bacău',
+  },
+];
+---
+
+<Base
+  title="Portofoliu · evenimente B2B coordonate | Eduard Crenganiș"
+  description="Forumuri, gale, lansări și congrese coordonate din Bacău în toată țara. Cifre, etape și ce a rămas după fiecare eveniment."
+  current="portofoliu"
+>
+  <!-- ================= HERO ================= -->
+  <section class="phero">
+    <div class="phero__media">
+      <img
+        src={u('/img/gala.webp')}
+        alt="Sală de gală cu mese rotunde și lumină caldă, înainte de intrarea invitaților"
+        width="1600"
+        height="1067"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+    <div class="phero__inner wrap">
+      <p class="phero__script">portofoliu</p>
+      <h1>Evenimente care au început la ora din agendă.</h1>
+      <p class="lede" style="max-width:40rem; margin-top:1.4rem;">
+        O selecție din ultimii trei ani. Am pus lângă fiecare cifrele care contează pentru
+        client, nu numărul de fotografii făcute.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= CIFRE ================= -->
+  <section class="section section--tight">
+    <div class="wrap">
+      <dl class="cifre" style="margin-top:0;">
+        {cifreGenerale.map(([nr, ce]) => (
+          <div><dt>{nr}</dt><dd>{ce}</dd></div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ================= GRILA DE PROIECTE ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">proiecte</p>
+        <h2>Șase evenimente, de la 140 la 900 de oameni.</h2>
+      </div>
+
+      <div class="cards cards--3">
+        {proiecte.map((p) =>
+          p.href ? (
+            <a class="card" href={p.href}>
+              <img src={p.img} alt={p.alt} loading="lazy" decoding="async" width="1600" height="1200" />
+              <span class="card__label">
+                <span class="card__script">{p.script}</span>
+                <span class="card__title">{p.titlu}</span>
+                <span class="card__meta">{p.meta}</span>
+              </span>
+            </a>
+          ) : (
+            <figure class="card">
+              <img src={p.img} alt={p.alt} loading="lazy" decoding="async" width="1600" height="1200" />
+              <figcaption class="card__label">
+                <span class="card__script">{p.script}</span>
+                <span class="card__title">{p.titlu}</span>
+                <span class="card__meta">{p.meta}</span>
+              </figcaption>
+            </figure>
+          )
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CAZ 1 ================= -->
+  <section class="caz" id="caz-forum">
+    <div class="caz__media">
+      <img src={u('/img/expo.webp')} alt="Hol de expoziție B2B cu standuri întunecate și vizitatori în mișcare" loading="lazy" decoding="async" width="1600" height="900" />
+    </div>
+    <div class="caz__inner wrap">
+      <p class="eyebrow">studiu de caz</p>
+      <h2>Forum de industrie, Iași.<br />Unsprezece săptămâni de la brief la demontare.</h2>
+      <p class="lede" style="max-width:44rem; margin-top:1.2rem;">
+        Asociație profesională, prima ediție. Nu aveau nici locație, nici agendă, doar o dată
+        și o listă de 400 de invitați. Am intrat pe Event Management complet.
+      </p>
+      <dl class="cifre">
+        <div><dt>320</dt><dd>participanți prezenți din 400 invitați</dd></div>
+        <div><dt>14</dt><dd>furnizori contractați și coordonați</dd></div>
+        <div><dt>4 h</dt><dd>montaj complet, cu repetiție tehnică</dd></div>
+        <div><dt>0</dt><dd>depășire față de bugetul aprobat</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      <div class="head">
+        <p class="eyebrow">cronologia</p>
+        <h2>Cum au arătat cele unsprezece săptămâni.</h2>
+      </div>
+      <ol class="rundown">
+        {forumEtape.map(([cand, ce]) => (
+          <li>
+            <span class="rundown__ora">{cand}</span>
+            <span class="rundown__ce">{ce}</span>
+          </li>
+        ))}
+      </ol>
+      <p class="nota">
+        Din cei 400 de invitați au confirmat 356. Diferența dintre confirmări și prezență
+        s-a redus cu un memento telefonic făcut de asociație cu două zile înainte, nu cu
+        încă un e-mail.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ================= CAZ 2 ================= -->
+  <section class="section" id="caz-gala">
+    <div class="wrap gala">
+      <div>
+        <div class="head">
+          <p class="eyebrow">studiu de caz</p>
+          <h2>Gală de premiere, Bacău. Ediția a patra.</h2>
+          <p>
+            Client vechi, format cunoscut, buget mai mic decât anul precedent. Toată munca a
+            fost să tăiem 18% din producție fără să se vadă din sală. Am tăiat din
+            scenotehnică și din print, nu din catering și nu din sonorizare.
+          </p>
+        </div>
+
+        <dl class="cifre" style="margin-top:1.5rem;">
+          {gala.map(([nr, ce]) => (
+            <div><dt>{nr}</dt><dd>{ce}</dd></div>
+          ))}
+        </dl>
+      </div>
+
+      <figure class="gala__foto">
+        <div class="shot shot--tall">
+          <img src={u('/img/montaj.webp')} alt="Echipă montând structura de scenă înaintea unui eveniment, în sală goală" loading="lazy" decoding="async" width="1600" height="1067" />
+        </div>
+        <figcaption>Fig. 07 · montajul de la 06:20, cu 40 de minute peste estimare</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= CE SPUN ================= -->
+  <section class="section section--paper">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">ce spun clienții</p>
+        <h2>Două lucruri care s-au repetat.</h2>
+      </div>
+
+      <div class="vorbe">
+        {vorbe.map((v) => (
+          <blockquote class="vorba">
+            <p>{v.text}</p>
+            <footer>
+              <span class="vorba__cine">{v.cine}</span>
+              <span class="mono">{v.unde}</span>
+            </footer>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="cta">
+    <div class="cta__media">
+      <img src={u('/img/networking.webp')} alt="Pauză de cafea la o conferință, grupuri de oameni în discuție" loading="lazy" decoding="async" width="1600" height="900" />
+    </div>
+    <div class="cta__inner wrap">
+      <p class="eyebrow">mai departe</p>
+      <h2>Următorul din listă poate fi al tău.</h2>
+      <p class="lede" style="max-width:38rem; margin-top:1.2rem;">
+        Scrie-mi ce eveniment ai în cap și îți spun în prima discuție dacă am agenda liberă
+        și pe ce direcție te încadrezi.
+      </p>
+      <div style="display:flex; flex-wrap:wrap; gap:.85rem; margin-top:2.2rem;">
+        <a class="btn btn--solid" href={u('/#contact')}>Cere o ofertă</a>
+        <a class="btn btn--ghost" href={u('/servicii')}>Vezi serviciile</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---------- Hero de pagină ---------- */
+  .phero {
+    position: relative;
+    isolation: isolate;
+    padding: clamp(5rem, 12vh, 9rem) var(--gutter) clamp(4rem, 9vh, 7rem);
+    display: grid;
+    align-content: end;
+    min-height: min(62svh, 36rem);
+  }
+  .phero__media { position: absolute; inset: 0; z-index: -2; }
+  .phero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 50%; }
+  .phero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to top, var(--ink) 3%, rgba(11, 10, 9, 0.78) 52%, rgba(11, 10, 9, 0.55) 100%),
+      linear-gradient(to right, rgba(11, 10, 9, 0.75), rgba(11, 10, 9, 0.1) 70%);
+  }
+  .phero__script {
+    font-family: var(--font-script);
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    line-height: 1;
+    color: var(--brass);
+    margin: 0 0 0.9rem;
+  }
+  .phero h1 { font-size: clamp(2.2rem, 4.6vw, 3.7rem); }
+
+  /* ---------- Studiu de caz pe fotografie ---------- */
+  .caz { position: relative; isolation: isolate; padding: clamp(4.5rem, 10vw, 8rem) var(--gutter); }
+  .caz__media { position: absolute; inset: 0; z-index: -2; }
+  .caz__media img { width: 100%; height: 100%; object-fit: cover; }
+  .caz::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to right, rgba(11, 10, 9, 0.95) 26%, rgba(11, 10, 9, 0.72) 100%),
+      linear-gradient(to bottom, rgba(11, 10, 9, 0.5), rgba(11, 10, 9, 0.25));
+  }
+  .caz h2 { margin: 0.2rem 0 0; font-size: clamp(1.6rem, 2.9vw, 2.5rem); }
+
+  /* ---------- Cronologie ---------- */
+  .rundown { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .rundown li {
+    display: grid;
+    grid-template-columns: 3.6rem 1fr;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: baseline;
+  }
+  .rundown__ora {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--brass);
+    font-variant-numeric: tabular-nums;
+  }
+  .rundown__ce { font-size: 0.94rem; color: var(--paper-2); line-height: 1.5; }
+  @media (min-width: 640px) {
+    .rundown li { grid-template-columns: 4.5rem 1fr; gap: 1.75rem; }
+  }
+
+  .nota {
+    margin-top: 1.75rem;
+    font-size: 0.92rem;
+    color: var(--paper-2);
+    border-left: 1px solid var(--brass);
+    padding-left: 1.1rem;
+  }
+
+  /* ---------- Caz 2 ---------- */
+  .gala { display: grid; gap: 2.5rem; }
+  @media (min-width: 940px) {
+    .gala { grid-template-columns: 1.25fr 0.75fr; gap: clamp(3rem, 6vw, 5rem); align-items: start; }
+    .gala .cifre { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ---------- Ce spun clienții ---------- */
+  .vorbe { display: grid; gap: 2.5rem; }
+  @media (min-width: 840px) {
+    .vorbe { grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 5vw, 4rem); }
+  }
+  .vorba {
+    margin: 0;
+    border-top: 1px solid var(--line-paper);
+    padding-top: 1.4rem;
+  }
+  .vorba p {
+    font-family: var(--font-display);
+    font-size: clamp(1.08rem, 1.5vw, 1.28rem);
+    line-height: 1.5;
+    color: var(--on-paper);
+  }
+  .vorba footer { margin-top: 1.1rem; display: grid; gap: 0.2rem; }
+  .vorba__cine { font-size: 0.9rem; color: var(--on-paper-2); }
+
+  /* ---------- CTA final ---------- */
+  .cta {
+    position: relative;
+    isolation: isolate;
+    padding: clamp(4.5rem, 10vw, 7.5rem) var(--gutter);
+  }
+  .cta__media { position: absolute; inset: 0; z-index: -2; }
+  .cta__media img { width: 100%; height: 100%; object-fit: cover; }
+  .cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to right, rgba(11, 10, 9, 0.94) 24%, rgba(11, 10, 9, 0.7) 100%),
+      linear-gradient(to bottom, rgba(11, 10, 9, 0.55), rgba(11, 10, 9, 0.3));
+  }
+  .cta h2 { font-size: clamp(1.8rem, 3.2vw, 2.7rem); margin-top: 0.2rem; }
+</style>

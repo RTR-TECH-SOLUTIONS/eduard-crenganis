@@ -2,56 +2,54 @@
 import Base from '../layouts/Base.astro';
 import { u } from '../lib/url';
 
-const directii = [
+const servicii = [
   {
-    nr: '01',
-    titlu: 'Consultanță',
-    subtitlu: 'Ai echipă, dar nu ai un plan care stă în picioare.',
+    href: u('/servicii#consultanta'),
     img: u('/img/consultanta.webp'),
     alt: 'Ședință de planificare cu planuri de sală și buget tipărite pe masă',
-    cap: 'Fig. 01 · ședință de brief, plan de sală tipărit',
-    text: 'Intru pentru 3-5 săptămâni, mă uit la ce ai, îți spun ce nu funcționează și îți las un plan pe care poate să-l execute echipa ta. Fără să-ți vând producția după.',
-    livrabile: [
-      'Audit de concept: ce vrei să obții și dacă formatul ales duce acolo',
-      'Buget realist pe capitole, cu marja de risc separată',
-      'Recomandare de locație și dată, cu 3 variante comparate',
-      'Structura agendei și logica pauzelor',
-      'Plan de risc pentru ziua Z, scris, nu discutat',
-    ],
+    script: 'prima direcție',
+    titlu: 'Consultanță',
+    meta: 'audit de concept · buget · plan de risc',
   },
   {
-    nr: '02',
-    titlu: 'Planner',
-    subtitlu: 'Ai planul, dar nu ai cine să-l ducă la capăt.',
+    href: u('/servicii#planner'),
     img: u('/img/planner.webp'),
     alt: 'Birou de organizator noaptea, cu minutar tipărit, plan de sală și bandă adezivă',
-    cap: 'Fig. 02 · birou de producție, săptămâna 8',
-    text: 'Construiesc tot dosarul evenimentului și îl țin la zi până în ziua dinaintea montajului. Tu aprobi, eu scriu și urmăresc.',
-    livrabile: [
-      'Concept și scenariu, cu ce se aude și ce se vede în fiecare moment',
-      'Vizionare de locații și negocierea contractului de spațiu',
-      'Agenda pe minute, nu pe ore',
-      'Plan de sală și fluxul participanților, de la parcare la garderobă',
-      'Brief scris pentru speakeri și moderator',
-      'Cronologia de producție pe săptămâni, cu termene pe fiecare furnizor',
-    ],
+    script: 'a doua direcție',
+    titlu: 'Planner',
+    meta: 'concept · agendă pe minute · furnizori',
   },
   {
-    nr: '03',
-    titlu: 'Event Management',
-    subtitlu: 'Vrei să predai tot și să te ocupi de invitați.',
+    href: u('/event-management'),
     img: u('/img/management.webp'),
-    alt: 'Regizor de eveniment la masa de regie, cu consola de lumini aprinsă',
-    cap: 'Fig. 03 · masa de regie, cu 40 de minute înainte de deschidere',
-    text: 'Pachetul complet. Include divizia de închirieri și subcontractări: eu găsesc, negociez și coordonez furnizorii, tu semnezi contractele.',
-    livrabile: [
-      'Tot ce intră în Planner',
-      'Contractarea furnizorilor: sonorizare, lumini, mobilier, catering, print, foto-video',
-      'Negocierea prețurilor și verificarea ofertelor linie cu linie',
-      'Coordonarea montajului și a repetiției tehnice',
-      'Regie în ziua evenimentului, cu minutar și stație',
-      'Demontaj, inventar și decont final pe capitole de buget',
-    ],
+    alt: 'Organizator la masa de regie, în lateralul scenei, în timpul unei conferințe',
+    script: 'a treia direcție',
+    titlu: 'Event Management',
+    meta: 'tot, până la ultimul cablu strâns',
+  },
+];
+
+const proiecte = [
+  {
+    img: u('/img/expo.webp'),
+    alt: 'Hol de expoziție B2B cu standuri întunecate și vizitatori în mișcare',
+    script: 'forum de industrie',
+    titlu: 'Prima ediție, Iași',
+    meta: '320 de participanți',
+  },
+  {
+    img: u('/img/gala.webp'),
+    alt: 'Sală de gală cu mese rotunde și lumină caldă, înainte de intrarea invitaților',
+    script: 'gală de premiere',
+    titlu: 'Ediția a patra, Bacău',
+    meta: '210 invitați',
+  },
+  {
+    img: u('/img/networking.webp'),
+    alt: 'Pauză de cafea la o conferință, grupuri de oameni în discuție',
+    script: 'lansare pentru parteneri',
+    titlu: 'Rețea de distribuție, București',
+    meta: '140 de parteneri',
   },
 ];
 
@@ -92,6 +90,10 @@ const faq = [
     a: 'Consultanța pornește de la 4.800 lei pe proiect. Planner și Event Management se calculează ca onorariu fix, între 9.000 și 28.000 lei, sau 8-12% din bugetul de producție la evenimentele peste 150.000 lei. Onorariul e trecut separat de bugetul de producție, ca să vezi exact ce plătești furnizorilor și ce plătești mie.',
   },
   {
+    q: 'Lucrezi doar în Bacău?',
+    a: 'Sunt din Bacău și de aici pornesc, dar jumătate din evenimente sunt în afara județului: Iași, Piatra Neamț, Brașov, Cluj, București. Deplasarea și cazarea intră în buget ca linie separată, nu ascunsă în onorariu.',
+  },
+  {
     q: 'Cu cât timp înainte trebuie să te contactez?',
     a: 'Zece-douăsprezece săptămâni pentru o conferință de peste 150 de participanți. Sub șase săptămâni accept doar dacă locația e deja rezervată și bugetul e aprobat.',
   },
@@ -111,8 +113,8 @@ const faq = [
 ---
 
 <Base
-  title="Eduard Crenganiș · organizator de evenimente B2B"
-  description="Consultanță, planning și event management pentru conferințe, summit-uri și evenimente corporate. Contractarea și coordonarea furnizorilor incluse."
+  title="Eduard Crenganiș · organizator de evenimente B2B în Bacău"
+  description="Consultanță, planning și event management pentru conferințe, summit-uri și evenimente corporate. Din Bacău, în toată țara. Contractarea și coordonarea furnizorilor incluse."
 >
   <!-- ================= HERO ================= -->
   <section class="hero">
@@ -128,19 +130,19 @@ const faq = [
     </div>
 
     <div class="hero__inner">
-      <p class="mono hero__eyebrow">Event management B2B · București și în țară</p>
+      <p class="hero__script">organizator de evenimente</p>
       <h1>
         Evenimente B2B ținute strâns, <br class="br-lg" />
         de la brief până la demontare.
       </h1>
       <p class="lede hero__lede">
         Consultanță, planificare și management de eveniment pentru companii, asociații
-        profesionale și organizatori de conferințe. Lucrez cu un minutar, un buget spart pe
-        capitole și o listă de furnizori pe care le vezi și tu, nu doar eu.
+        profesionale și organizatori de conferințe. Din Bacău, în toată țara. Lucrez cu un
+        minutar, un buget spart pe capitole și o listă de furnizori pe care le vezi și tu.
       </p>
       <div class="hero__cta">
         <a class="btn btn--solid" href="#contact">Cere o ofertă</a>
-        <a class="btn btn--ghost" href="#proces">Vezi cum lucrez</a>
+        <a class="btn btn--ghost" href={u('/servicii')}>Vezi serviciile</a>
       </div>
     </div>
 
@@ -152,68 +154,78 @@ const faq = [
     </div>
   </section>
 
-  <!-- ================= POZIȚIONARE ================= -->
-  <section class="section">
-    <div class="wrap poz">
-      <div>
-        <h2>
-          Nu vând „organizare de evenimente”.
-          Vând un eveniment care începe la ora scrisă în agendă.
-        </h2>
-      </div>
-      <div class="poz__text">
+  <!-- ================= DESPRE ================= -->
+  <section class="section section--paper" id="despre">
+    <div class="wrap despre">
+      <figure class="despre__foto">
+        <div class="portret">
+          <div class="portret__inner">
+            <img
+              src={u('/img/eduard-portret.webp')}
+              alt="Eduard Crenganiș, organizator de evenimente"
+              width="1100"
+              height="1100"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </figure>
+
+      <div class="despre__text">
+        <p class="eyebrow">cine sunt</p>
+        <h2>Eduard Crenganiș, organizator de evenimente. Din Bacău.</h2>
         <p>
-          Un eveniment B2B nu se măsoară în fotografii frumoase. Se măsoară în cine a venit,
-          cu cine a vorbit și ce s-a întâmplat în cele două săptămâni de după. Restul e decor.
+          Am început în producție, nu în birou: cabluri, structuri, montaje care se terminau la
+          patru dimineața. Nouă ani mai târziu, partea aia încă e motivul pentru care știu cât
+          durează cu adevărat un montaj și de ce nu se poate „repede, până la 8".
         </p>
         <p>
-          Lucrez singur pe partea de strategie și coordonare, cu o echipă de producție pe care
-          o strâng pentru fiecare proiect. Asta înseamnă că vorbești cu omul care ia deciziile,
-          nu cu un account manager care le transmite mai departe.
+          Astăzi lucrez singur pe strategie și coordonare și strâng echipa de producție pentru
+          fiecare proiect. Vorbești cu omul care ia deciziile, nu cu un account manager care le
+          transmite mai departe. În ziua evenimentului sunt în sală, nu pe telefon.
         </p>
         <p>
-          Serviciile sunt împărțite în trei direcții. Poți intra pe oricare dintre ele și poți
-          urca de la una la alta pe parcurs.
+          Baza e la Bacău. Jumătate din evenimente sunt în afara județului, de la Iași și
+          Piatra Neamț până la Cluj și București.
+        </p>
+
+        <p class="despre__semnatura mono">
+          Bacău · lucrez în toată țara<br />
+          <a class="ulink" href="tel:+40741208336">+40 741 208 336</a>
         </p>
       </div>
     </div>
   </section>
 
-  <hr class="rule" />
-
-  <!-- ================= CELE 3 DIRECȚII ================= -->
-  <section class="section" id="directii">
+  <!-- ================= SERVICII ================= -->
+  <section class="section" id="servicii">
     <div class="wrap">
       <div class="head">
-        <span class="head__num">Trei direcții</span>
+        <p class="eyebrow">trei direcții</p>
         <h2>Alegi cât predai și cât ții la tine.</h2>
+        <p>
+          Poți intra pe oricare dintre ele și poți urca de la una la alta pe parcurs. Divizia
+          de închirieri și subcontractări intră în pachetul de Event Management.
+        </p>
       </div>
-    </div>
 
-    <div class="wrap dir">
-      {directii.map((d) => (
-        <article class="dir__row">
-          <figure class="dir__media">
-            <div class="shot"><img src={d.img} alt={d.alt} loading="lazy" decoding="async" width="1600" height="1200" /></div>
-            <figcaption>{d.cap}</figcaption>
-          </figure>
+      <div class="cards cards--3">
+        {servicii.map((s) => (
+          <a class="card" href={s.href}>
+            <img src={s.img} alt={s.alt} loading="lazy" decoding="async" width="1600" height="1200" />
+            <span class="card__label">
+              <span class="card__script">{s.script}</span>
+              <span class="card__title">{s.titlu}</span>
+              <span class="card__meta">{s.meta}</span>
+            </span>
+          </a>
+        ))}
+      </div>
 
-          <div class="dir__body">
-            <p class="head__num">{d.nr}</p>
-            <h3>{d.titlu}</h3>
-            <p class="dir__sub">{d.subtitlu}</p>
-            <p>{d.text}</p>
-            <ul class="list">
-              {d.livrabile.map((l) => <li>{l}</li>)}
-            </ul>
-            {d.nr === '03' && (
-              <p style="margin-top:1.4rem;">
-                <a class="ulink" href={u('/event-management')}>Detaliat, pe pagina de Event Management</a>
-              </p>
-            )}
-          </div>
-        </article>
-      ))}
+      <p style="margin-top:2.25rem;">
+        <a class="ulink" href={u('/servicii')}>Ce include fiecare direcție, în detaliu</a>
+      </p>
     </div>
   </section>
 
@@ -223,7 +235,7 @@ const faq = [
   <section class="section" id="minutar">
     <div class="wrap">
       <div class="head">
-        <span class="head__num">Documentul de lucru</span>
+        <p class="eyebrow">documentul de lucru</p>
         <h2>Așa arată o zi de eveniment scrisă înainte să înceapă.</h2>
         <p>
           Fragment din minutarul unui forum de industrie cu 320 de participanți. Îl primești
@@ -259,7 +271,7 @@ const faq = [
     <div class="wrap furn">
       <div>
         <div class="head">
-          <span class="head__num">Închirieri și subcontractări</span>
+          <p class="eyebrow">închirieri și subcontractări</p>
           <h2>Divizia de furnizori intră în pachetul de Event Management.</h2>
           <p>
             Nu am depozit propriu și nu vând echipamente. Am o rețea de furnizori cu care
@@ -293,13 +305,38 @@ const faq = [
     </div>
   </section>
 
-  <hr class="rule" />
+  <!-- ================= PORTOFOLIU (teaser) ================= -->
+  <section class="section section--paper">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">din portofoliu</p>
+        <h2>Trei evenimente și ce a rămas după ele.</h2>
+      </div>
+
+      <div class="cards cards--3">
+        {proiecte.map((p) => (
+          <a class="card" href={u('/portofoliu')}>
+            <img src={p.img} alt={p.alt} loading="lazy" decoding="async" width="1600" height="1200" />
+            <span class="card__label">
+              <span class="card__script">{p.script}</span>
+              <span class="card__title">{p.titlu}</span>
+              <span class="card__meta">{p.meta}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <p style="margin-top:2.25rem;">
+        <a class="ulink" href={u('/portofoliu')}>Vezi portofoliul complet</a>
+      </p>
+    </div>
+  </section>
 
   <!-- ================= PROCES ================= -->
   <section class="section" id="proces">
     <div class="wrap">
       <div class="head">
-        <span class="head__num">Cum lucrăm</span>
+        <p class="eyebrow">cum lucrăm</p>
         <h2>Cinci etape, fiecare cu un document la capăt.</h2>
       </div>
 
@@ -314,27 +351,6 @@ const faq = [
           </li>
         ))}
       </ol>
-    </div>
-  </section>
-
-  <!-- ================= STUDIU DE CAZ ================= -->
-  <section class="caz">
-    <div class="caz__media">
-      <img src={u('/img/expo.webp')} alt="Hol de expoziție B2B cu standuri întunecate și vizitatori în mișcare" loading="lazy" decoding="async" width="1600" height="900" />
-    </div>
-    <div class="caz__inner wrap">
-      <p class="head__num">Un proiect</p>
-      <h2>Forum de industrie, Cluj-Napoca.<br />Unsprezece săptămâni de la brief la demontare.</h2>
-      <p class="lede" style="max-width:44rem;">
-        Asociație profesională, prima ediție. Nu aveau nici locație, nici agendă, doar o dată
-        și o listă de 400 de invitați. Am intrat pe Event Management complet.
-      </p>
-      <dl class="cifre">
-        <div><dt>320</dt><dd>participanți prezenți din 400 invitați</dd></div>
-        <div><dt>14</dt><dd>furnizori contractați și coordonați</dd></div>
-        <div><dt>4 h</dt><dd>montaj complet, cu repetiție tehnică</dd></div>
-        <div><dt>0</dt><dd>depășire față de bugetul aprobat</dd></div>
-      </dl>
     </div>
   </section>
 
@@ -368,7 +384,7 @@ const faq = [
   <section class="section" id="intrebari">
     <div class="wrap wrap--narrow">
       <div class="head">
-        <span class="head__num">Întrebări</span>
+        <p class="eyebrow">întrebări</p>
         <h2>Ce mă întreabă toți, înainte de prima ședință.</h2>
       </div>
 
@@ -388,7 +404,7 @@ const faq = [
     <div class="wrap contact__grid">
       <div>
         <div class="head">
-          <span class="head__num">Contact</span>
+          <p class="eyebrow">contact</p>
           <h2>Spune-mi ce eveniment ai în cap.</h2>
           <p>
             Răspund în aceeași zi lucrătoare. Dacă e mai simplu, sună direct sau scrie pe
@@ -404,9 +420,9 @@ const faq = [
 
         <figure style="margin-top:2.5rem;">
           <div class="shot shot--wide">
-            <img src={u('/img/networking.webp')} alt="Pauză de cafea la o conferință, grupuri de oameni în discuție" loading="lazy" decoding="async" width="1600" height="900" />
+            <img src={u('/img/montaj-sala.webp')} alt="Sală de conferință pregătită, cu scaunele aliniate înainte de intrarea participanților" loading="lazy" decoding="async" width="1600" height="900" />
           </div>
-          <figcaption>Fig. 06 · pauza de la 10:05, cea care decide dacă evenimentul a fost util</figcaption>
+          <figcaption>Fig. 06 · sala la 08:30, înainte de primul participant</figcaption>
         </figure>
       </div>
 
@@ -503,7 +519,13 @@ const faq = [
   }
 
   .hero__inner { max-width: 68rem; margin-inline: auto; width: 100%; }
-  .hero__eyebrow { margin-bottom: 1.6rem; color: var(--brass); }
+  .hero__script {
+    font-family: var(--font-script);
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    line-height: 1;
+    color: var(--brass);
+    margin: 0 0 1.1rem;
+  }
   .hero__lede { max-width: 38rem; margin-top: 1.9rem; }
   .hero__cta { display: flex; flex-wrap: wrap; gap: 0.85rem; margin-top: 2.4rem; }
 
@@ -524,53 +546,22 @@ const faq = [
     .hero__facts { grid-template-columns: repeat(4, auto); justify-content: space-between; }
   }
 
-  /* ---------- Poziționare ---------- */
-  .poz { display: grid; gap: 2rem; }
-  .poz h2 { font-size: clamp(1.7rem, 2.8vw, 2.5rem); }
-  .poz__text { color: var(--paper-2); }
-  @media (min-width: 900px) {
-    .poz { grid-template-columns: 1.05fr 0.95fr; gap: clamp(3rem, 6vw, 6rem); }
+  /* ---------- Despre ---------- */
+  .despre { display: grid; gap: 2.5rem; align-items: center; }
+  .despre__foto { margin: 0; display: flex; justify-content: center; }
+  .despre__text h2 {
+    font-size: clamp(1.75rem, 3vw, 2.6rem);
+    margin: 0.2rem 0 1.4rem;
   }
-
-  /* ---------- Direcții ---------- */
-  .dir { display: grid; gap: clamp(3.5rem, 7vw, 6rem); }
-
-  .dir__row { display: grid; gap: 1.75rem; }
-  .dir__row .shot { aspect-ratio: 4 / 3; }
-  .dir__sub {
-    font-family: var(--font-display);
-    font-size: 1.12rem;
-    color: var(--brass);
-    margin-top: 0.5rem;
-    margin-bottom: 1.1rem;
+  .despre__semnatura {
+    margin-top: 2rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line-paper);
+    line-height: 1.9;
   }
-  .dir__body h3 { margin-top: 0.35rem; }
-  .dir__body > p { color: var(--paper-2); }
-
-  @media (min-width: 900px) {
-    .dir__row { grid-template-columns: 0.85fr 1.15fr; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: start; }
-    /* rândul din mijloc oglindit — ritm asimetric, nu grilă de carduri */
-    .dir__row:nth-child(2) .dir__media { order: 2; }
+  @media (min-width: 880px) {
+    .despre { grid-template-columns: 0.8fr 1.2fr; gap: clamp(3rem, 6vw, 5.5rem); }
   }
-
-  .list { list-style: none; padding: 0; margin: 1.4rem 0 0; display: grid; gap: 0.6rem; }
-  .list li {
-    position: relative;
-    padding-left: 1.4rem;
-    font-size: 0.94rem;
-    color: var(--paper-2);
-    line-height: 1.55;
-  }
-  .list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.72em;
-    width: 0.7rem;
-    height: 1px;
-    background: var(--brass);
-  }
-  .list--no li::before { background: var(--paper-3); }
 
   /* ---------- Minutar ---------- */
   .minutar { display: grid; gap: 2.5rem; }
@@ -598,15 +589,12 @@ const faq = [
     .rundown li { grid-template-columns: 4.5rem 1fr; gap: 1.75rem; }
   }
 
-  .shot--tall { aspect-ratio: 3 / 4; }
-  .shot--wide { aspect-ratio: 16 / 9; }
-
   /* ---------- Furnizori (limbaj de deviz) ---------- */
   .furn { display: grid; gap: 3rem; }
   @media (min-width: 980px) {
     .furn { grid-template-columns: 1.25fr 0.75fr; gap: clamp(3rem, 6vw, 5rem); align-items: start; }
   }
-  .furn__media { position: sticky; top: 2rem; }
+  .furn__media { position: sticky; top: 5rem; }
 
   .deviz { margin: 0; }
   .deviz__row {
@@ -661,60 +649,10 @@ const faq = [
     .etape li { grid-template-columns: 5rem 1fr; gap: 2.5rem; padding: 2.15rem 0; }
   }
 
-  /* ---------- Studiu de caz ---------- */
-  .caz { position: relative; isolation: isolate; padding: clamp(4.5rem, 10vw, 8rem) var(--gutter); }
-  .caz__media { position: absolute; inset: 0; z-index: -2; }
-  .caz__media img { width: 100%; height: 100%; object-fit: cover; }
-  .caz::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background:
-      linear-gradient(to right, rgba(11, 10, 9, 0.95) 26%, rgba(11, 10, 9, 0.72) 100%),
-      linear-gradient(to bottom, rgba(11, 10, 9, 0.5), rgba(11, 10, 9, 0.25));
-  }
-  .caz h2 { margin: 0.9rem 0 1.4rem; font-size: clamp(1.6rem, 2.9vw, 2.5rem); }
-
-  .cifre { display: grid; gap: 1.5rem 2.5rem; margin: 2.75rem 0 0; }
-  .cifre dt {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 3.4vw, 2.8rem);
-    color: var(--brass);
-    line-height: 1;
-  }
-  .cifre dd { margin: 0.55rem 0 0; font-size: 0.86rem; color: var(--paper-2); max-width: 13rem; line-height: 1.45; }
-  @media (min-width: 700px) { .cifre { grid-template-columns: repeat(4, 1fr); } }
-
   /* ---------- Potrivire ---------- */
   .potrivire { display: grid; gap: 3rem; }
   .potrivire h3 { font-size: 1.35rem; }
   @media (min-width: 860px) { .potrivire { grid-template-columns: 1fr 1fr; gap: clamp(3rem, 6vw, 5rem); } }
-
-  /* ---------- FAQ ---------- */
-  .faq { border-top: 1px solid var(--line); }
-  .faq details { border-bottom: 1px solid var(--line-soft); }
-  .faq summary {
-    cursor: pointer;
-    list-style: none;
-    padding: 1.35rem 2.5rem 1.35rem 0;
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    position: relative;
-  }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after {
-    content: '+';
-    position: absolute;
-    right: 0.25rem;
-    top: 1.25rem;
-    font-family: var(--font-mono);
-    color: var(--brass);
-    font-size: 1.1rem;
-  }
-  .faq details[open] summary::after { content: '–'; }
-  .faq__a { padding: 0 0 1.5rem; max-width: 42rem; }
-  .faq__a p { color: var(--paper-2); font-size: 0.95rem; margin: 0; }
 
   /* ---------- Contact ---------- */
   .contact {

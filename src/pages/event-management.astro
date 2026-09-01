@@ -113,9 +113,7 @@ const faq = [
       />
     </div>
     <div class="phero__inner wrap">
-      <p class="mono" style="color:var(--brass); margin-bottom:1.4rem;">
-        Direcția 03 · pachetul complet
-      </p>
+      <p class="phero__script">pachetul complet</p>
       <h1>Event Management</h1>
       <p class="lede" style="max-width:40rem; margin-top:1.6rem;">
         Predai evenimentul în întregime și te ocupi de invitați. Eu construiesc, contractez,
@@ -157,7 +155,7 @@ const faq = [
   <section class="section">
     <div class="wrap">
       <div class="head">
-        <span class="head__num">Formate acoperite</span>
+        <p class="eyebrow">formate acoperite</p>
         <h2>Ce fel de evenimente iau pe pachetul complet.</h2>
       </div>
 
@@ -178,7 +176,7 @@ const faq = [
   <section class="section">
     <div class="wrap">
       <div class="head">
-        <span class="head__num">Ce include</span>
+        <p class="eyebrow">ce include</p>
         <h2>Patru capitole, în ordinea în care se întâmplă.</h2>
       </div>
 
@@ -205,7 +203,7 @@ const faq = [
     </div>
     <div class="banda__inner wrap">
       <div class="head">
-        <span class="head__num">Închirieri și subcontractări</span>
+        <p class="eyebrow">închirieri și subcontractări</p>
         <h2>Furnizorii sunt partea în care se pierd banii și nervii.</h2>
       </div>
 
@@ -240,7 +238,7 @@ const faq = [
   <section class="section">
     <div class="wrap">
       <div class="head">
-        <span class="head__num">Calendar tipic</span>
+        <p class="eyebrow">calendar tipic</p>
         <h2>Douăsprezece săptămâni, pentru o conferință de 300 de oameni.</h2>
         <p>
           Se poate și în opt, dacă locația e deja rezervată. Sub șase săptămâni nu iau
@@ -295,7 +293,7 @@ const faq = [
   <section class="section">
     <div class="wrap wrap--narrow">
       <div class="head">
-        <span class="head__num">Întrebări despre pachet</span>
+        <p class="eyebrow">întrebări despre pachet</p>
         <h2>Ce se întreabă înainte de a semna.</h2>
       </div>
 
@@ -349,6 +347,13 @@ const faq = [
     background:
       linear-gradient(to top, var(--ink) 3%, rgba(11, 10, 9, 0.78) 52%, rgba(11, 10, 9, 0.55) 100%),
       linear-gradient(to right, rgba(11, 10, 9, 0.75), rgba(11, 10, 9, 0.1) 70%);
+  }
+  .phero__script {
+    font-family: var(--font-script);
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    line-height: 1;
+    color: var(--brass);
+    margin: 0 0 0.9rem;
   }
   .phero h1 { font-size: clamp(2.4rem, 5.2vw, 4.2rem); }
 

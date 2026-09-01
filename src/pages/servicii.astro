@@ -1,0 +1,385 @@
+---
+import Base from '../layouts/Base.astro';
+import { u } from '../lib/url';
+
+const directii = [
+  {
+    id: 'consultanta',
+    nr: '01',
+    script: 'prima direcție',
+    titlu: 'Consultanță',
+    subtitlu: 'Ai echipă, dar nu ai un plan care stă în picioare.',
+    img: u('/img/consultanta.webp'),
+    alt: 'Ședință de planificare cu planuri de sală și buget tipărite pe masă',
+    cap: 'Fig. 01 · ședință de brief, plan de sală tipărit',
+    durata: '3-5 săptămâni',
+    pret: 'de la 4.800 lei pe proiect',
+    text: 'Intru pentru câteva săptămâni, mă uit la ce ai, îți spun ce nu funcționează și îți las un plan pe care poate să-l execute echipa ta. Fără să-ți vând producția după.',
+    livrabile: [
+      'Audit de concept: ce vrei să obții și dacă formatul ales duce acolo',
+      'Buget realist pe capitole, cu marja de risc separată',
+      'Recomandare de locație și dată, cu 3 variante comparate',
+      'Structura agendei și logica pauzelor',
+      'Plan de risc pentru ziua Z, scris, nu discutat',
+      'O ședință de predare cu echipa ta, în care trecem prin tot documentul',
+    ],
+    nota: 'Dacă după consultanță vrei să preiau și execuția, onorariul de consultanță se scade din onorariul de Planner sau Event Management.',
+  },
+  {
+    id: 'planner',
+    nr: '02',
+    script: 'a doua direcție',
+    titlu: 'Planner',
+    subtitlu: 'Ai planul, dar nu ai cine să-l ducă la capăt.',
+    img: u('/img/planner.webp'),
+    alt: 'Birou de organizator noaptea, cu minutar tipărit, plan de sală și bandă adezivă',
+    cap: 'Fig. 02 · birou de producție, săptămâna 8',
+    durata: 'de la brief până în ziua dinaintea montajului',
+    pret: 'onorariu fix, 9.000-18.000 lei',
+    text: 'Construiesc tot dosarul evenimentului și îl țin la zi. Tu aprobi, eu scriu și urmăresc. În ziua Z, execuția rămâne la echipa ta, cu documentele mele în mână.',
+    livrabile: [
+      'Concept și scenariu, cu ce se aude și ce se vede în fiecare moment',
+      'Vizionare de locații și negocierea contractului de spațiu',
+      'Agenda pe minute, nu pe ore',
+      'Plan de sală și fluxul participanților, de la parcare la garderobă',
+      'Brief scris pentru speakeri și moderator',
+      'Cronologia de producție pe săptămâni, cu termene pe fiecare furnizor',
+      'Lista de furnizori recomandați, cu oferte cerute și comparate',
+    ],
+    nota: 'Planner înseamnă că eu scriu și urmăresc, dar nu stau la regie în ziua evenimentului. Dacă vrei și asta, treci pe Event Management.',
+  },
+  {
+    id: 'management',
+    nr: '03',
+    script: 'a treia direcție',
+    titlu: 'Event Management',
+    subtitlu: 'Predai evenimentul și te ocupi de invitați.',
+    img: u('/img/management.webp'),
+    alt: 'Organizator la masa de regie, în lateralul scenei, în timpul unei conferințe',
+    cap: 'Fig. 03 · masa de regie, minutul 4 din deschidere',
+    durata: 'de la brief până la decontul de după',
+    pret: 'onorariu fix 14.000-28.000 lei sau 8-12% din bugetul de producție',
+    text: 'Tot ce e la Planner, plus contractarea și coordonarea furnizorilor, montajul, ziua Z de la 07:00 și decontul de după. Aici intră și divizia de închirieri și subcontractări.',
+    livrabile: [
+      'Tot ce intră la Planner',
+      'Cereri de ofertă și negociere cu minimum trei furnizori pe capitolele importante',
+      'Contractare pe numele companiei tale, cu onorariul meu trecut separat',
+      'Coordonarea montajului și repetiția tehnică din ziua dinainte',
+      'Regie în ziua Z, de la primul om care intră până la ultimul cablu strâns',
+      'Demontaj, inventar și proces-verbal semnat cu locația',
+      'Decont pe capitole și raport scris la o săptămână după',
+    ],
+    nota: 'Pagina de Event Management intră în detaliu pe ce include pachetul complet, pe calendar și pe ce nu intră.',
+    link: u('/event-management'),
+  },
+];
+
+const comparatie = [
+  ['Audit de concept și buget pe capitole', true, true, true],
+  ['Recomandare de locație și dată', true, true, true],
+  ['Agendă pe minute și plan de sală', false, true, true],
+  ['Negocierea contractului de spațiu', false, true, true],
+  ['Cronologie de producție pe săptămâni', false, true, true],
+  ['Cereri de ofertă și comparație de furnizori', false, 'parțial', true],
+  ['Contractarea furnizorilor pe numele tău', false, false, true],
+  ['Coordonarea montajului și repetiția tehnică', false, false, true],
+  ['Regie în ziua evenimentului', false, false, true],
+  ['Demontaj, inventar, proces-verbal', false, false, true],
+  ['Decont pe capitole și raport la o săptămână', false, false, true],
+];
+
+const faq = [
+  {
+    q: 'Pot să încep cu Consultanță și să urc pe parcurs?',
+    a: 'Da, e cel mai des întâlnit traseu. Onorariul de consultanță se scade din onorariul direcției pe care urci, dacă trecerea se face în aceeași ediție a evenimentului.',
+  },
+  {
+    q: 'Ce înseamnă „parțial" la cereri de ofertă, pe Planner?',
+    a: 'Pe Planner cer ofertele și ți le pun în comparație, dar negocierea finală și contractarea rămân la tine. Pe Event Management le duc eu până la semnătură.',
+  },
+  {
+    q: 'Onorariul se plătește o dată sau în tranșe?',
+    a: 'În trei tranșe: 40% la semnare, 40% cu două săptămâni înainte de eveniment, 20% după decont. La consultanță, integral la predarea documentului.',
+  },
+  {
+    q: 'Lucrezi și pe evenimente în afara Bacăului?',
+    a: 'Da, jumătate din evenimente sunt în afara județului. Deplasarea și cazarea intră ca linie separată în buget, la costul real, fără adaos.',
+  },
+];
+---
+
+<Base
+  title="Servicii · consultanță, planner și event management B2B | Eduard Crenganiș"
+  description="Trei direcții pentru evenimente B2B: consultanță, planner și event management complet. Ce include fiecare, cât durează și cât costă."
+  current="servicii"
+>
+  <!-- ================= HERO ================= -->
+  <section class="phero">
+    <div class="phero__media">
+      <img
+        src={u('/img/planner.webp')}
+        alt="Birou de organizator noaptea, cu minutar tipărit, plan de sală și bandă adezivă"
+        width="1600"
+        height="1067"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+    <div class="phero__inner wrap">
+      <p class="phero__script">serviciile mele</p>
+      <h1>Trei direcții, un singur standard.</h1>
+      <p class="lede" style="max-width:40rem; margin-top:1.4rem;">
+        Diferența dintre ele nu e cât de mult vorbim, ci cine execută în ziua evenimentului.
+        Alegi în funcție de cât poate duce echipa ta.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= DIRECȚII ================= -->
+  <div class="dir">
+    {directii.map((d) => (
+      <section class="section" id={d.id}>
+        <article class="wrap dir__row">
+          <figure class="dir__media">
+            <div class="shot"><img src={d.img} alt={d.alt} loading="lazy" decoding="async" width="1600" height="1200" /></div>
+            <figcaption>{d.cap}</figcaption>
+          </figure>
+
+          <div class="dir__body">
+            <p class="eyebrow">{d.script}</p>
+            <h2>{d.titlu}</h2>
+            <p class="dir__sub">{d.subtitlu}</p>
+            <p>{d.text}</p>
+
+            <dl class="fisa">
+              <div><dt>Durata</dt><dd>{d.durata}</dd></div>
+              <div><dt>Onorariu</dt><dd>{d.pret}</dd></div>
+            </dl>
+
+            <ul class="list">
+              {d.livrabile.map((l) => <li>{l}</li>)}
+            </ul>
+
+            <p class="nota">{d.nota}</p>
+
+            {d.link && (
+              <p style="margin-top:1.4rem;">
+                <a class="ulink" href={d.link}>Pagina de Event Management, în detaliu</a>
+              </p>
+            )}
+          </div>
+        </article>
+      </section>
+    ))}
+  </div>
+
+  <!-- ================= COMPARAȚIE ================= -->
+  <section class="section section--paper">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">pe scurt</p>
+        <h2>Ce intră în fiecare direcție.</h2>
+        <p>
+          Aceleași rânduri pe care le folosesc în ofertă. Dacă ai nevoie de un singur rând de
+          la coloana din dreapta, îl putem adăuga separat pe oricare dintre celelalte.
+        </p>
+      </div>
+
+      <div class="tabel__scroll">
+        <table class="tabel">
+          <thead>
+            <tr>
+              <th scope="col">Ce primești</th>
+              <th scope="col">Consultanță</th>
+              <th scope="col">Planner</th>
+              <th scope="col">Event<br />Management</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparatie.map(([ce, c, p, m]) => (
+              <tr>
+                <th scope="row">{ce}</th>
+                <td>{c === true ? <span class="da">inclus</span> : c === false ? <span class="nu">–</span> : <span class="partial">{c}</span>}</td>
+                <td>{p === true ? <span class="da">inclus</span> : p === false ? <span class="nu">–</span> : <span class="partial">{p}</span>}</td>
+                <td>{m === true ? <span class="da">inclus</span> : m === false ? <span class="nu">–</span> : <span class="partial">{m}</span>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mono" style="margin-top:1.5rem;">
+        Onorariul e mereu trecut separat de bugetul de producție.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      <div class="head">
+        <p class="eyebrow">înainte să întrebi</p>
+        <h2>Ce mă întreabă toți despre servicii.</h2>
+      </div>
+
+      <div class="faq">
+        {faq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <div class="faq__a"><p>{f.a}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="cta">
+    <div class="cta__media">
+      <img src={u('/img/montaj-sala.webp')} alt="Sală de conferință pregătită înainte de intrarea participanților" loading="lazy" decoding="async" width="1600" height="900" />
+    </div>
+    <div class="cta__inner wrap">
+      <p class="eyebrow">mai departe</p>
+      <h2>Spune-mi ce eveniment ai în cap.</h2>
+      <p class="lede" style="max-width:38rem; margin-top:1.2rem;">
+        Îți spun în prima discuție pe care direcție te încadrezi și dacă are sens să lucrăm
+        împreună. Dacă nu are, îți spun asta la fel de repede.
+      </p>
+      <div class="hero__cta" style="display:flex; flex-wrap:wrap; gap:.85rem; margin-top:2.2rem;">
+        <a class="btn btn--solid" href={u('/#contact')}>Cere o ofertă</a>
+        <a class="btn btn--ghost" href={u('/portofoliu')}>Vezi portofoliul</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---------- Hero de pagină ---------- */
+  .phero {
+    position: relative;
+    isolation: isolate;
+    padding: clamp(5rem, 12vh, 9rem) var(--gutter) clamp(4rem, 9vh, 7rem);
+    display: grid;
+    align-content: end;
+    min-height: min(62svh, 36rem);
+  }
+  .phero__media { position: absolute; inset: 0; z-index: -2; }
+  .phero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; }
+  .phero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to top, var(--ink) 3%, rgba(11, 10, 9, 0.78) 52%, rgba(11, 10, 9, 0.55) 100%),
+      linear-gradient(to right, rgba(11, 10, 9, 0.75), rgba(11, 10, 9, 0.1) 70%);
+  }
+  .phero__script {
+    font-family: var(--font-script);
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    line-height: 1;
+    color: var(--brass);
+    margin: 0 0 0.9rem;
+  }
+  .phero h1 { font-size: clamp(2.3rem, 5vw, 4rem); }
+
+  /* ---------- Direcții ---------- */
+  .dir .section { padding-block: clamp(3rem, 6vw, 5rem); }
+  .dir .section:not(:first-child) { border-top: 1px solid var(--line-soft); }
+
+  .dir__row { display: grid; gap: 1.75rem; }
+  .dir__row .shot { aspect-ratio: 4 / 3; }
+  .dir__body h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); margin-top: 0.1rem; }
+  .dir__sub {
+    font-family: var(--font-display);
+    font-size: 1.12rem;
+    color: var(--brass);
+    margin-top: 0.6rem;
+    margin-bottom: 1.1rem;
+  }
+  .dir__body > p { color: var(--paper-2); }
+
+  @media (min-width: 900px) {
+    .dir__row { grid-template-columns: 0.85fr 1.15fr; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: start; }
+    /* al doilea rând oglindit — ritm asimetric, nu grilă de carduri */
+    .dir .section:nth-child(2) .dir__media { order: 2; }
+  }
+
+  /* fișă tehnică scurtă, în limbaj de ofertă */
+  .fisa {
+    margin: 1.6rem 0 0;
+    display: grid;
+    gap: 0.55rem;
+    border-top: 1px solid var(--line);
+    padding-top: 0.9rem;
+  }
+  .fisa > div { display: flex; gap: 0.75rem; align-items: baseline; flex-wrap: wrap; }
+  .fisa dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--paper-3);
+    min-width: 5.5rem;
+  }
+  .fisa dd { margin: 0; font-size: 0.92rem; color: var(--paper); }
+
+  .nota {
+    margin-top: 1.75rem;
+    font-size: 0.92rem;
+    color: var(--paper-2);
+    border-left: 1px solid var(--brass);
+    padding-left: 1.1rem;
+  }
+
+  /* ---------- Tabel de comparație ---------- */
+  .tabel__scroll { overflow-x: auto; }
+  .tabel {
+    width: 100%;
+    min-width: 40rem;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  .tabel th,
+  .tabel td {
+    padding: 0.85rem 1rem 0.85rem 0;
+    border-bottom: 1px solid rgba(23, 21, 15, 0.09);
+    vertical-align: top;
+  }
+  .tabel thead th {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--on-paper-3);
+    border-bottom: 1px solid var(--on-paper);
+    line-height: 1.35;
+  }
+  .tabel tbody th {
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 400;
+    color: var(--on-paper);
+    padding-right: 2rem;
+  }
+  .tabel td { width: 8.5rem; }
+  .da { font-family: var(--font-mono); font-size: 0.72rem; color: var(--brass-ink); }
+  .partial { font-family: var(--font-mono); font-size: 0.72rem; color: var(--on-paper-3); }
+  .nu { font-family: var(--font-mono); font-size: 0.8rem; color: rgba(23, 21, 15, 0.45); }
+
+  /* ---------- CTA final ---------- */
+  .cta {
+    position: relative;
+    isolation: isolate;
+    padding: clamp(4.5rem, 10vw, 7.5rem) var(--gutter);
+  }
+  .cta__media { position: absolute; inset: 0; z-index: -2; }
+  .cta__media img { width: 100%; height: 100%; object-fit: cover; }
+  .cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to right, rgba(11, 10, 9, 0.94) 24%, rgba(11, 10, 9, 0.7) 100%),
+      linear-gradient(to bottom, rgba(11, 10, 9, 0.55), rgba(11, 10, 9, 0.3));
+  }
+  .cta h2 { font-size: clamp(1.8rem, 3.2vw, 2.7rem); margin-top: 0.2rem; }
+</style>

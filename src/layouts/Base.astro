@@ -24,9 +24,18 @@ const mail = 'eduard@crenganis.ro';
 ---
 
 <!doctype html>
-<html lang="ro">
+<html lang="ro" data-tema="alb">
   <head>
     <meta charset="utf-8" />
+    <script is:inline>
+      // aplicat înainte de prima pictură, ca să nu clipească tema
+      (function () {
+        try {
+          var t = localStorage.getItem('ec-tema');
+          if (t === 'negru') document.documentElement.dataset.tema = 'negru';
+        } catch (e) {}
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -66,10 +75,17 @@ const mail = 'eduard@crenganis.ro';
               <a href={`tel:${telHref}`}>{tel}</a>
               <a href={`mailto:${mail}`}>{mail}</a>
               <p class="mono" style="margin-top:.9rem; line-height:1.5;">Bacău · lucrez în toată țara</p>
+              <button class="tema tema--sertar" type="button" data-tema-toggle aria-label="Comută între varianta pe alb și cea pe negru">
+                negru
+              </button>
             </div>
           </nav>
 
           <a class="topbar__tel" href={`tel:${telHref}`}>{tel}</a>
+
+          <button class="tema" type="button" data-tema-toggle aria-label="Comută între varianta pe alb și cea pe negru">
+            negru
+          </button>
 
           <button class="burger" type="button" data-menu-toggle aria-expanded="false" aria-controls="nav-principal">
             Meniu
@@ -110,6 +126,19 @@ const mail = 'eduard@crenganis.ro';
     </div>
 
     <script>
+      const temaBtns = [...document.querySelectorAll('[data-tema-toggle]')];
+      const eticheta = () => (document.documentElement.dataset.tema === 'negru' ? 'alb' : 'negru');
+      const scrieEticheta = () => temaBtns.forEach((b) => (b.textContent = eticheta()));
+      scrieEticheta();
+      temaBtns.forEach((b) =>
+        b.addEventListener('click', () => {
+          const nou = document.documentElement.dataset.tema === 'negru' ? 'alb' : 'negru';
+          document.documentElement.dataset.tema = nou;
+          try { localStorage.setItem('ec-tema', nou); } catch (e) {}
+          scrieEticheta();
+        })
+      );
+
       const toggle = document.querySelector('[data-menu-toggle]');
       const panel = document.getElementById('nav-principal');
       const topbar = document.querySelector('[data-topbar]');

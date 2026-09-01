@@ -43,6 +43,57 @@
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
+/* ============================================================
+   Varianta pe alb (implicită) — corpul paginii pe hârtie, ca la
+   referință. Se răstoarnă doar setul de tokeni; blocurile care stau
+   peste fotografie își redeclară mai jos setul întunecat.
+   ============================================================ */
+[data-tema="alb"] {
+  --ink:        #ffffff;
+  --ink-2:      #f7f4ee;
+  --ink-3:      #efe9dd;
+  --ink-4:      #e5ded1;
+
+  --paper:      #17150f;
+  --paper-2:    #4c463c;
+  --paper-3:    #6a6255;
+
+  --brass:      #8f6730;
+  --brass-dim:  #7d5e2e;
+
+  --line:       rgba(23, 21, 15, 0.17);
+  --line-soft:  rgba(23, 21, 15, 0.09);
+}
+
+/* insulele întunecate: hero-uri, carduri foto, benzi peste fotografie, footer */
+[data-tema="alb"] .lp,
+[data-tema="alb"] .phero,
+[data-tema="alb"] .caz,
+[data-tema="alb"] .cta,
+[data-tema="alb"] .card,
+[data-tema="alb"] .foot,
+[data-tema="alb"] .topbar:not(.is-stuck):not(.is-open) {
+  --ink:        #0b0a09;
+  --ink-2:      #121110;
+  --ink-3:      #1a1817;
+  --ink-4:      #232120;
+
+  --paper:      #ece6da;
+  --paper-2:    #b3aa9c;
+  --paper-3:    #8a8275;
+
+  --brass:      #c3924b;
+  --brass-dim:  #8a6a3a;
+
+  --line:       rgba(236, 230, 218, 0.14);
+  --line-soft:  rgba(236, 230, 218, 0.07);
+
+  color: var(--paper);
+}
+
+/* pe alb, cardul de hârtie din hero se desprinde de fotografie printr-o umbră suptilă */
+[data-tema="alb"] .lp__card { box-shadow: 0 1px 0 rgba(23, 21, 15, 0.08); }
+
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -451,6 +502,31 @@ p:last-child { margin-bottom: 0; }
 
 @media (min-width: 1180px) {
   .topbar__tel { display: inline-block; }
+}
+
+/* comutator de temă — ajutor de demo, se scoate cu o linie la proiectul real */
+.tema {
+  appearance: none;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: var(--paper-3);
+  padding: 0.32rem 0.55rem;
+  margin-left: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 160ms var(--ease), border-color 160ms var(--ease);
+}
+.tema:hover { color: var(--paper); border-color: var(--paper-3); }
+
+.tema--sertar { margin: 1.1rem 0 0; justify-self: start; width: fit-content; }
+@media (max-width: 1023px) {
+  .topbar__row > .tema { display: none; }
+}
+@media (min-width: 1024px) {
+  .tema--sertar { display: none; }
 }
 
 /* ---------- Foto + capție ---------- */

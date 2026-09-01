@@ -34,6 +34,17 @@ Peste ele, limbajul de obiect real al meseriei, ca site-ul să nu pară generat:
 minutar (run-of-show) cu ore pe coloană, listă de furnizori în stil deviz cu leader-dots,
 tabel de comparație scris ca într-o ofertă, capții foto numerotate `Fig. 0x`, cifre în mono.
 
+### Două variante: alb (implicit) și negru
+
+Corpul paginilor e pe alb, ca la referință. Hero-urile, benzile peste fotografie, cardurile
+foto și footerul rămân întunecate — sunt „insule" care își redeclară local setul de tokeni,
+în `global.css`, sub `[data-tema="alb"] .lp, .phero, .caz, .cta, .card, .foot`.
+
+Comutarea se face din butonul `alb / negru` din bară (în sertar pe mobil), se ține minte în
+`localStorage` și se aplică înainte de prima pictură dintr-un `<script is:inline>` din `<head>`,
+ca să nu clipească. E un ajutor de demo: la proiectul real se scoate butonul și rămâne
+`data-tema` fix pe varianta aleasă de client.
+
 ### Tokens
 
 Paleta e extrasă din fotografiile de eveniment: cerneală caldă `#0b0a09`, hârtie `#ece6da`,
